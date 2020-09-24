@@ -1,0 +1,94 @@
+// You can't put all these 3 attributes on the same line, because the "key" keyword mean that the combination of all attributes on that line must be unique.
+// So if you write `key username : text, pubkey : byte_array, avatar : integer;`
+// it will mean that: 
+//  1. You can't have user with the same exact combination of pubkey, username, avatar
+//  2. But you CAN have 2 users with the same username but different avatar, or 2 users with the same pubkey but different username)
+
+entity player {
+  key username: text; // So putting only username on a "key" line will ensure that each user must use a different username
+  key account: ft3.acc.account; // since Original depends on ft3 we will use ft3 account system here
+  avatar: integer;
+}
+
+// Return data of queries for player
+struct player_info {
+  id: byte_array;
+  username: text;
+  avatar: integer;
+  tokens: integer;
+}
+
+/*
+ *  OPERATIONS
+ */
+
+operation create_player(
+  username: text,
+  avatar: integer,
+  account_id: byte_array,
+  auth_descriptor_id: byte_array
+){
+  val account = ft3.acc.auth_and_log(account_id, auth_descriptor_id, ["A"]);
+
+  // create the token wallet for player, see init.rell
+  ft3.core.ensure_balance( account,  ft3.core.asset @ { .name == chain_context.args.token_name } );
+
+  // add player to table
+  create player( username, avatar, account );	
+}
+
+/*
+ *  QUERIES
+ */
+
+query find_by_account_id(account_id: byte_array) {
+  val player = player @? { .account.id == account_id };
+
+  if(player == null){
+    return null;
+  }
+
+  return get_player_info(player);
+}
+
+query find_by_username(username: text){
+  val player = player @? { .username == username };
+
+  if(player == null){
+    return null;
+  }
+
+  return get_player_info(player);
+}
+
+query lookup_tokens(account_id: byte_array){
+  val player = player @? { .account.id == account_id };
+
+  if(player == null){
+    return null;
+  }
+
+  return calculate_tokens( player.account );
+}
+
+/*
+ *  FUNCTIONS
+ */
+
+function calculate_tokens(account : ft3.acc.account) : integer{
+  val token = ft3.core.asset @ { .id == (chain_context.args.token_name, chain_context.blockchain_rid).hash() };
+  var token_balance = (ft3.core.ensure_balance(account, token)).amount;
+
+  return token_balance;
+}
+
+function get_player_info(player) : player_info {
+  val tokens = calculate_tokens( player.account );
+
+  return player_info(
+    id = player.account.id,
+    username = player.username,
+    avatar = player.avatar,
+    tokens = tokens
+  );
+}

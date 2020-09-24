@@ -1,0 +1,52 @@
+
+import ^^.component_definition.{
+	property_type
+};
+
+import ^^.instance.{
+	property,
+	set_property,
+	find_by_id,
+	set_property_account,
+	is_text_or_byte_array,
+	_instance_property,
+	_set_property_instance
+};
+
+import ^^.structure.{
+	Structure
+};
+
+import ft3: rell_modules.ft3.account;
+
+operation set_instance_properties(id: byte_array, properties: list<property>) {
+	_set_instance_properties(id, properties);
+}
+
+function _set_instance_properties(id: byte_array, properties: list<property>) {
+	val instance = find_by_id(id)!!;
+	
+	for (property in properties) {
+		val instance_property = _instance_property(instance, property.name);
+		
+		// TODO: improve the code, because set_property internally fetches intance_property
+		when(instance_property.structure_property.type) {
+			property_type.interface,
+			property_type.structure -> {
+				if(is_text_or_byte_array(property.value)) {
+					val instance_id = byte_array.from_gtv(property.value);
+					val i = find_by_id(instance_id)!!;
+					_set_property_instance(instance_property, i); 
+				}
+			}
+			property_type.account -> {
+				val account_id = byte_array.from_gtv(property.value);
+				val account = ft3.account @ { account_id };
+				set_property_account(instance, property.name, account);
+			}
+			else -> {
+				set_property(instance, property.name, property.value);
+			}
+		}
+	}
+}

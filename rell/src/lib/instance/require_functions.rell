@@ -1,0 +1,62 @@
+
+function require_instance_property_not_readonly(instance_property) {
+	require(
+		is_instance_property_readonly(instance_property) == false,
+		"Trying to update readonly property '" + 
+		instance_property_name(instance_property) + 
+		"'"	
+	);
+}
+
+function require_object_property_optional(instance_property) {
+	require(
+		is_instance_property_optional(instance_property),
+		"Trying to unset non-optional property '" + 
+		instance_property_name(instance_property) + 
+		"'"
+	);
+}
+
+function require_instance_owner(instance, ft3.account) {
+	require(get_property_account(instance, "owner")!! == account);
+}
+
+function require_instance_is_of_valid_type(instance_property, instance) {
+	_require_property_structure_or_interface(instance_property);
+	
+	val name = instance_property_name(instance_property);
+	val type = instance_property_type(instance_property);
+	
+	when(type) {
+		property_type.interface -> {
+			val interface = structure_property_interface @ { 
+				instance_property.structure_property
+			}.interface;
+			
+			require(
+				structure_implements_interface(instance.structure, interface),
+				"Property '" + name + "' is not of '" + interface.name + "' type."
+			);
+		}
+		property_type.structure -> {
+			val structure = structure_property_structure @ { 
+				instance_property.structure_property
+			}.structure;
+			
+			require(
+				instance.structure == structure,
+				"Property '" + name + "' is not of '" + structure.name + "' type."
+			);
+		}
+	}
+}
+
+function _require_property_structure_or_interface(instance_property) {
+	val name = instance_property_name(instance_property);
+	val type = instance_property_type(instance_property);
+
+	require(
+		type == property_type.structure or type == property_type.interface,
+		"Property '" + name + "' is not an interface or a structure"
+	);
+}

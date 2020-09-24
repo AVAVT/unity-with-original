@@ -1,0 +1,17 @@
+
+function _get_id_property(props: map<name, prop>): name? {
+	var id_property_names = list<name>();
+	
+	for ((name, prop) in props) {
+		if (prop.prop_type_struct.type == property_type.id) {
+			id_property_names.add(name);
+		}
+	}
+	
+	require(
+		id_property_names.size() <= 1, 
+		"Found " + id_property_names.size() + " properties of type ID"
+	);
+	
+	return if (id_property_names.size() == 1) id_property_names[0] else null; 
+}

@@ -1,0 +1,10 @@
+// this is just so that other files in this module (this folder) can use .ft3.acc directly instead of writting the whole import
+namespace ft3 {
+  import acc: ^.lib.ft3.account;
+  import core: ^.lib.ft3.core;
+}
+
+struct module_args {
+  admin_pubkey: pubkey;
+  token_name: text;
+}

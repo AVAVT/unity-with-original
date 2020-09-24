@@ -1,0 +1,65 @@
+import ^.lib.interface.*;
+import ^.lib.structure.*;
+import ^.lib.instance.*;
+
+function init_structures() {
+	val ITradeable = defI(interface_("ITradeable", [
+		"price": prop(propI(int())),
+		"asset_id": prop(propI(int())),
+		"image": prop(
+			static(),
+			propI(int())
+		),
+		"is_listed": prop(propBool(bool()))
+	]));
+	
+	val IOriginal = defI(interface_("IOriginal",
+		[
+			"id": prop(propI(int())),
+			"index": prop(propIndx(indx())),
+			"owner": prop(propI(int())),
+			"designer_id": prop(propI(int())),
+			"designer_name": prop(propT(txt())),
+			"description": prop(
+				static(),
+				propT(txt())
+			)
+		]
+	));
+	
+	val ISword = defI(interface_("ISword", extends([IOriginal, ITradeable]), 
+		[
+			"length": prop(
+				static(),
+				propI(int())
+			),
+			"material": prop(
+				static(),
+				propT(txt())
+			)
+		]
+	));
+	
+	val SilverSword = def_(structure_("SilverSword", implements([ISword]),
+		init([
+			"image": x"abcdef123456".to_gtv(),
+			"length": (100).to_gtv(),
+			"material": "silver".to_gtv(),
+			"designer_name": "Armani".to_gtv()
+		])
+	));
+	
+	val IronSword = def_(structure_("IronSword", implements([ISword]),
+		init([
+			"image": x"abcdef123456".to_gtv(),			
+			"length": (120).to_gtv(),
+			"material": "iron".to_gtv()
+		])
+	));
+	
+	val silverSword1 = new_(instance_(SilverSword));
+	val silverSword2 = new_(instance_(SilverSword));
+	
+	val ironSword1 = new_(instance_(IronSword));
+	val ironSword2 = new_(instance_(IronSword));
+}

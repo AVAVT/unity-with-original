@@ -1,0 +1,1245 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<dict>
+    <entry key="blockstrategy">
+        <dict>
+            <entry key="name">
+                <string>net.postchain.base.BaseBlockBuildingStrategy</string>
+            </entry>
+        </dict>
+    </entry>
+    <entry key="configurationfactory">
+        <string>net.postchain.gtx.GTXBlockchainConfigurationFactory</string>
+    </entry>
+    <entry key="gtx">
+        <dict>
+            <entry key="modules">
+                <array>
+                    <string>net.postchain.rell.module.RellPostchainModuleFactory</string>
+                    <string>net.postchain.gtx.StandardOpsGTXModule</string>
+                </array>
+            </entry>
+            <entry key="rell">
+                <dict>
+                    <entry key="moduleArgs">
+                        <dict>
+                            <entry key="game">
+                                <dict>
+                                    <entry key="admin_pubkey">
+                                        <bytea>03B519082C905096E4B658E7ACA7B971DF3A9D3A1D04BBEBE342B59CCCDC6DC3BA</bytea>
+                                    </entry>
+                                    <entry key="token_name">
+                                        <string>WONDER TOKEN</string>
+                                    </entry>
+                                </dict>
+                            </entry>
+                            <entry key="lib.ft3.core">
+                                <dict>
+                                    <entry key="my_blockchain_description">
+                                        <string>test_description</string>
+                                    </entry>
+                                    <entry key="my_blockchain_name">
+                                        <string>test</string>
+                                    </entry>
+                                    <entry key="my_blockchain_website">
+                                        <string>test_website</string>
+                                    </entry>
+                                    <entry key="rate_limit_active">
+                                        <int>0</int>
+                                    </entry>
+                                    <entry key="rate_limit_max_points">
+                                        <int>10</int>
+                                    </entry>
+                                    <entry key="rate_limit_points_at_account_creation">
+                                        <int>1</int>
+                                    </entry>
+                                    <entry key="rate_limit_recovery_time">
+                                        <int>5000</int>
+                                    </entry>
+                                </dict>
+                            </entry>
+                        </dict>
+                    </entry>
+                    <entry key="modules">
+                        <array>
+                            <string>main</string>
+                        </array>
+                    </entry>
+                    <entry key="sources_v0.10">
+                        <dict>
+                            <entry key="game/init.rell">
+                                <string>&#13;
+// This operation is called once on a fresh chain to initialize stuffs&#13;
+operation init(){&#13;
+  require(is_signer(chain_context.args.admin_pubkey));&#13;
+  create_admin_account_if_needed();&#13;
+  register_token_asset_if_needed();&#13;
+}&#13;
+&#13;
+/*&#13;
+ * ADMIN ACCOUNT&#13;
+ * The admin account would be the one to have all plots initially, and people would buy plots from the admin account by paying WONDER_TOKEN (below)&#13;
+ */&#13;
+&#13;
+function admin_auth_descriptor(): ft3.acc.auth_descriptor {&#13;
+  return ft3.acc.auth_descriptor(&#13;
+    "S",&#13;
+    [chain_context.args.admin_pubkey],&#13;
+    [["A", "T"].to_gtv(), chain_context.args.admin_pubkey.to_hex().to_gtv()], // chain_context arguments is defined in config/run.xml&#13;
+    gtv.from_bytes(x'a0020500')&#13;
+  );&#13;
+}&#13;
+&#13;
+function create_admin_account_if_needed() {&#13;
+  val auth_descriptor = admin_auth_descriptor();&#13;
+  val account = ft3.acc.account @? { .id == auth_descriptor.hash() };&#13;
+&#13;
+  if (account == null) {&#13;
+    ft3.acc.create_account_with_auth(auth_descriptor);&#13;
+  }&#13;
+}&#13;
+&#13;
+&#13;
+/*&#13;
+ * FT3 ASSETS&#13;
+ */&#13;
+&#13;
+// This would be the "money" token to buy stuffs&#13;
+function register_token_asset_if_needed() {&#13;
+	val token = ft3.core.asset @? { .id == (chain_context.args.token_name, chain_context.blockchain_rid).hash() };&#13;
+&#13;
+	if (token == null) {&#13;
+		ft3.core.register_asset(chain_context.args.token_name, chain_context.blockchain_rid);&#13;
+	}&#13;
+}&#13;
+</string>
+                            </entry>
+                            <entry key="game/module.rell">
+                                <string>// this is just so that other files in this module (this folder) can use .ft3.acc directly instead of writting the whole import&#13;
+namespace ft3 {&#13;
+  import acc: ^.lib.ft3.account;&#13;
+	import core: ^.lib.ft3.core;&#13;
+}&#13;
+&#13;
+struct module_args {&#13;
+  admin_pubkey: pubkey;&#13;
+  token_name: text;&#13;
+}</string>
+                            </entry>
+                            <entry key="game/player.rell">
+                                <string>// You can't put all these 3 attributes on the same line, because the "key" keyword mean that the combination of all attributes on that line must be unique.&#13;
+// So if you write `key username : text, pubkey : byte_array, avatar : integer;`&#13;
+// it will mean that: &#13;
+//  1. You can't have user with the same exact combination of pubkey, username, avatar&#13;
+//  2. But you CAN have 2 users with the same username but different avatar, or 2 users with the same pubkey but different username)&#13;
+&#13;
+entity player {&#13;
+  key username: text; // So putting only username on a "key" line will ensure that each user must use a different username&#13;
+  key account: ft3.acc.account; // since Original depends on ft3 we will use ft3 account system here&#13;
+  avatar: integer;&#13;
+}&#13;
+&#13;
+// Return data of queries for player&#13;
+struct player_info {&#13;
+  id: byte_array;&#13;
+  username: text;&#13;
+  avatar: integer;&#13;
+  tokens: integer;&#13;
+}&#13;
+&#13;
+/*&#13;
+ *  OPERATIONS&#13;
+ */&#13;
+&#13;
+operation create_player(&#13;
+	username: text,&#13;
+  avatar: integer,&#13;
+	account_id: byte_array,&#13;
+	auth_descriptor_id: byte_array&#13;
+){&#13;
+	val account = ft3.acc.auth_and_log(account_id, auth_descriptor_id, ["A"]);&#13;
+  &#13;
+  // create the token wallet for player, see init.rell&#13;
+	ft3.core.ensure_balance( account,  ft3.core.asset @ { .name == chain_context.args.token_name } );&#13;
+	&#13;
+	// add player to table&#13;
+	create player( username, avatar, account );	&#13;
+}&#13;
+&#13;
+/*&#13;
+ *  QUERIES&#13;
+ */&#13;
+&#13;
+query find_by_account_id(account_id: byte_array) {&#13;
+  val player = player @? { .account.id == account_id };&#13;
+&#13;
+  if(player == null){&#13;
+    return null;&#13;
+  }&#13;
+&#13;
+  return get_player_info(player);&#13;
+}&#13;
+&#13;
+query find_by_username(username: text){&#13;
+  val player = player @? { .username == username };&#13;
+&#13;
+  if(player == null){&#13;
+    return null;&#13;
+  }&#13;
+&#13;
+  return get_player_info(player);&#13;
+}&#13;
+&#13;
+query lookup_tokens(account_id: byte_array){&#13;
+	val player = player @? { .account.id == account_id };&#13;
+	&#13;
+	if(player == null){&#13;
+		return null;&#13;
+	}&#13;
+	&#13;
+	return calculate_tokens( player.account );&#13;
+}&#13;
+&#13;
+/*&#13;
+ *  FUNCTIONS&#13;
+ */&#13;
+&#13;
+function calculate_tokens(account : ft3.acc.account) : integer{&#13;
+  val token = ft3.core.asset @ { .id == (chain_context.args.token_name, chain_context.blockchain_rid).hash() };&#13;
+	var token_balance = (ft3.core.ensure_balance(account, token)).amount;&#13;
+	&#13;
+	return token_balance;&#13;
+}&#13;
+&#13;
+function get_player_info(player) : player_info {&#13;
+  val tokens = calculate_tokens( player.account );&#13;
+&#13;
+  return player_info(&#13;
+    id = player.account.id,&#13;
+    username = player.username,&#13;
+    avatar = player.avatar,&#13;
+    tokens = tokens&#13;
+  );&#13;
+}</string>
+                            </entry>
+                            <entry key="lib/ft3/account/auth_basic.rell">
+                                <string>// Auth type:&#13;
+&#13;
+// "S" - single-sig&#13;
+// "M" - multi-sig&#13;
+&#13;
+struct single_sig_args {&#13;
+       flags: set&lt;text&gt;;&#13;
+       pubkey;&#13;
+}&#13;
+&#13;
+struct multi_sig_args {&#13;
+       flags: set&lt;text&gt;;&#13;
+       signatures_required: integer;&#13;
+       pubkeys: list&lt;pubkey&gt;;&#13;
+}&#13;
+&#13;
+function check_single_sig_auth(args: byte_array, participants: list&lt;byte_array&gt;, required_flags: list&lt;text&gt;): boolean {&#13;
+    require(participants.size() == 1);&#13;
+    val ss_args = single_sig_args.from_bytes(args);&#13;
+    return&#13;
+          ss_args.flags.contains_all(required_flags)&#13;
+            and&#13;
+          is_signer(participants[0]);&#13;
+}&#13;
+&#13;
+function check_multi_sig_auth(args: byte_array, participants: list&lt;byte_array&gt;, required_flags: list&lt;text&gt;): boolean {&#13;
+   val multi_sign_args = multi_sig_args.from_bytes(args);&#13;
+   if (not (multi_sign_args.flags.contains_all(required_flags))) return false;&#13;
+   var num_sign = multi_sign_args.signatures_required;&#13;
+   for(s in participants) {&#13;
+      if(is_signer(s)) {&#13;
+          num_sign -= 1;&#13;
+          if(num_sign &lt; 1) {return true;}&#13;
+      }&#13;
+   }&#13;
+   return false;&#13;
+}&#13;
+&#13;
+function check_auth_args (a_t: text, args: byte_array, participants: list&lt;byte_array&gt;, required_flags: list&lt;text&gt;): boolean {&#13;
+    return when (a_t) {&#13;
+        "S" -&gt; check_single_sig_auth(args, participants, required_flags);&#13;
+        "M" -&gt; check_multi_sig_auth(args, participants, required_flags);&#13;
+        else -&gt; false;&#13;
+    };&#13;
+}&#13;
+&#13;
+&#13;
+&#13;
+function require_auth (account, descriptor_id: byte_array, required_flags: list&lt;text&gt;) {&#13;
+   val account_auth_descriptor = account_auth_descriptor @ {&#13;
+     account,&#13;
+     .descriptor_id == descriptor_id&#13;
+   };&#13;
+	&#13;
+	require(is_valid(account_auth_descriptor));&#13;
+	&#13;
+   	require(&#13;
+		check_auth_args(&#13;
+       		account_auth_descriptor.auth_type,&#13;
+       		account_auth_descriptor.args,&#13;
+       		auth_descriptor_participant @* { account_auth_descriptor } ( .id ),&#13;
+       		required_flags&#13;
+		)&#13;
+   );&#13;
+   &#13;
+   update_auth_descriptor_rule_variables(account_auth_descriptor);&#13;
+   delete_expired_auth_descriptors(account);&#13;
+}&#13;
+</string>
+                            </entry>
+                            <entry key="lib/ft3/account/auth_descriptor_rule.rell">
+                                <string>&#13;
+enum rule_variable {&#13;
+	block_height,&#13;
+	block_time,&#13;
+	op_count&#13;
+}&#13;
+&#13;
+enum rule_operator {&#13;
+	lt,&#13;
+	le,&#13;
+	eq,&#13;
+	ge,&#13;
+	gt&#13;
+}&#13;
+&#13;
+struct rule_expression {&#13;
+	variable: text;&#13;
+	operator: text;&#13;
+	value: gtv;&#13;
+}&#13;
+&#13;
+entity auth_descriptor_rule_variable {&#13;
+	key account_auth_descriptor, name;&#13;
+	mutable value: byte_array;&#13;
+}&#13;
+&#13;
+function is_valid(auth_descriptor: account_auth_descriptor): boolean {&#13;
+	// check if rules is null (encoded null is equal to 0xa0020500)&#13;
+	if (auth_descriptor.rules == x'a0020500') {&#13;
+		return true;&#13;
+	}&#13;
+	&#13;
+	return is_rule_valid(&#13;
+		gtv.from_bytes(auth_descriptor.rules), &#13;
+		load_variables(auth_descriptor)&#13;
+	);&#13;
+}&#13;
+&#13;
+function is_rule_valid(rule: gtv, variables: map&lt;text, gtv&gt;): boolean {&#13;
+	val parameters = list&lt;gtv&gt;.from_gtv(rule);&#13;
+	val operator = text.from_gtv(parameters[1]);&#13;
+	&#13;
+	if (operator == "and") {&#13;
+		return handle_composed_rule(rule, variables);&#13;
+	} else {&#13;
+		return handle_single_rule(rule, variables);&#13;
+	}&#13;
+}&#13;
+&#13;
+function handle_single_rule(rule: gtv, variables: map&lt;text, gtv&gt;): boolean {&#13;
+	return evaluate_int_variable_rule(&#13;
+		rule_expression.from_gtv(rule), &#13;
+		variables&#13;
+	);	&#13;
+}&#13;
+&#13;
+ &#13;
+function handle_composed_rule(rule: gtv, variables: map&lt;text, gtv&gt;): boolean {&#13;
+	val parameters = list&lt;gtv&gt;.from_gtv(rule);&#13;
+	val operator = text.from_gtv(parameters[1]);&#13;
+	if (operator == "and") {&#13;
+		return is_rule_valid(parameters[0], variables) and is_rule_valid(parameters[2], variables);&#13;
+	} else {&#13;
+		return false;&#13;
+	}&#13;
+}&#13;
+&#13;
+&#13;
+&#13;
+function is_active(account_auth_descriptor): boolean {&#13;
+	if (account_auth_descriptor.rules == x'a0020500') {&#13;
+		return true;&#13;
+	}&#13;
+	&#13;
+	return is_rule_active(gtv.from_bytes(account_auth_descriptor.rules), map&lt;text, gtv&gt;());&#13;
+}&#13;
+&#13;
+&#13;
+function is_rule_active(r: gtv, variables: map&lt;text, gtv&gt;): boolean {&#13;
+	val parameters = list&lt;gtv&gt;.from_gtv(r);&#13;
+	val operator = text.from_gtv(parameters[1]);&#13;
+	when (operator) {&#13;
+		"and" -&gt; {&#13;
+			return is_rule_active(parameters[0], variables) and is_rule_active(parameters[2], variables);&#13;
+		}&#13;
+		else -&gt; {&#13;
+			return is_simple_rule_active(r, variables);&#13;
+		}&#13;
+	}&#13;
+}&#13;
+&#13;
+function is_simple_rule_active(rule: gtv, variables: map&lt;text, gtv&gt;): boolean {&#13;
+	val parameters = list&lt;gtv&gt;.from_gtv(rule);&#13;
+	val variable_name = text.from_gtv(parameters[0]);&#13;
+	when (rule_variable.value(variable_name)) {&#13;
+		rule_variable.block_height -&gt; {&#13;
+			return is_block_height_rule_active(rule);&#13;
+		}&#13;
+		rule_variable.block_time -&gt; {&#13;
+			return is_block_time_rule_active(rule);&#13;
+		}		&#13;
+		rule_variable.op_count -&gt; {&#13;
+			return is_op_count_rule_active(rule);&#13;
+		}&#13;
+	}&#13;
+}&#13;
+&#13;
+/*&#13;
+ *  Variables&#13;
+ */&#13;
+&#13;
+function evaluate_int_variable_rule(rule: rule_expression, variables: map&lt;text, gtv&gt;): boolean {&#13;
+	val variable = rule_variable.value(rule.variable);&#13;
+	val operator = rule_operator.value(rule.operator);&#13;
+	val current_value = variable_value(variable, variables);&#13;
+	val defined_value = integer.from_gtv(rule.value);&#13;
+&#13;
+	when (operator) {&#13;
+		rule_operator.lt -&gt; {&#13;
+			return current_value &lt; defined_value;&#13;
+		}&#13;
+		rule_operator.le -&gt; {&#13;
+			return current_value &lt;= defined_value;&#13;
+		}&#13;
+		rule_operator.eq -&gt; {&#13;
+			return current_value == defined_value;&#13;
+		}&#13;
+		rule_operator.ge -&gt; {&#13;
+			return current_value &gt;= defined_value;&#13;
+		}&#13;
+		rule_operator.gt -&gt; {&#13;
+			return current_value &gt; defined_value;&#13;
+		}&#13;
+	}&#13;
+}&#13;
+&#13;
+&#13;
+/*&#13;
+ * Called from _add_auth_descriptor function&#13;
+ */&#13;
+function setup_auth_descriptor_variables(account_auth_descriptor) {&#13;
+	&#13;
+	if (account_auth_descriptor.rules == x'a0020500') {&#13;
+		return;&#13;
+	} &#13;
+	&#13;
+	val variables = get_variable_names_set(gtv.from_bytes(account_auth_descriptor.rules));&#13;
+	&#13;
+	for (variable in variables) {&#13;
+		when (variable) {&#13;
+			rule_variable.op_count.name -&gt; {&#13;
+				create auth_descriptor_rule_variable(&#13;
+					account_auth_descriptor,&#13;
+					name = variable,&#13;
+					value = op_count_variable_initial_value().to_bytes()&#13;
+				);&#13;
+			}&#13;
+		}&#13;
+	}&#13;
+}&#13;
+ &#13;
+function update_variables(account_auth_descriptor, variables: map&lt;text, gtv&gt;) {&#13;
+	for ((name, value) in variables) {&#13;
+		val variable = auth_descriptor_rule_variable @ { account_auth_descriptor, name };&#13;
+		val int_value = integer.from_gtv(value);&#13;
+		&#13;
+		when (name) {&#13;
+			rule_variable.op_count.name -&gt; {&#13;
+				variable.value = (int_value + 1).to_gtv().to_bytes();&#13;
+			}&#13;
+		}&#13;
+	}&#13;
+}&#13;
+ &#13;
+function variable_value(variable: rule_variable, variables: map&lt;text, gtv&gt;): integer {&#13;
+	when (variable) {&#13;
+		rule_variable.block_height -&gt; {&#13;
+			return op_context.block_height;&#13;
+		}&#13;
+		rule_variable.block_time -&gt; {&#13;
+			return op_context.last_block_time;&#13;
+		}&#13;
+		rule_variable.op_count -&gt; {&#13;
+			return integer.from_gtv(variables[rule_variable.op_count.name]);&#13;
+		}&#13;
+	}&#13;
+}&#13;
+&#13;
+/*&#13;
+ * Analyze the rules before assigning them to an authenticator descriptor&#13;
+ */&#13;
+ function analyze_auth_descriptor_rules(rules: gtv, hop: integer) {&#13;
+ 	require(hop&lt;3, "too many rules");&#13;
+ 	val rules_bytes = rules.to_bytes(); &#13;
+ 	if (rules_bytes == x'a0020500') {&#13;
+		return;&#13;
+	}&#13;
+	&#13;
+ 	val params = list&lt;gtv&gt;.from_gtv(rules);&#13;
+ 	require(params.size() &lt;=3);&#13;
+ 	&#13;
+ 	val operator = text.from_gtv(params[1]);&#13;
+ 	if(operator == "and") {&#13;
+ 		analyze_auth_descriptor_rules(params[0], hop+1); &#13;
+ 		analyze_auth_descriptor_rules(params[2], hop+1);&#13;
+ 	} 	&#13;
+ 	&#13;
+	return;&#13;
+ }&#13;
+&#13;
+/*&#13;
+ * Returns set of variable names used in a rule&#13;
+ */&#13;
+function get_variable_names_set(rules: gtv): set&lt;text&gt; {&#13;
+	val parameters = list&lt;gtv&gt;.from_gtv(rules);&#13;
+	val operator = text.from_gtv(parameters[1]);&#13;
+	var vars = set&lt;text&gt;();&#13;
+	if (operator == "and") {&#13;
+		vars.add_all(get_variable_names_set(parameters[0]));&#13;
+		vars.add_all(get_variable_names_set(parameters[2]));&#13;
+	} else {&#13;
+		vars.add(text.from_gtv(parameters[0]));&#13;
+	}&#13;
+	return vars;&#13;
+} &#13;
+&#13;
+function load_variables(account_auth_descriptor): map&lt;text, gtv&gt; {&#13;
+	val variables = auth_descriptor_rule_variable @* { account_auth_descriptor };&#13;
+	&#13;
+	val variables_map = map&lt;text, gtv&gt;();&#13;
+	for (variable in variables) {&#13;
+		variables_map[variable.name] = gtv.from_bytes(variable.value);&#13;
+	}&#13;
+	&#13;
+	return variables_map;&#13;
+}&#13;
+&#13;
+function update_auth_descriptor_rule_variables(account_auth_descriptor) {&#13;
+	val variables = load_variables(account_auth_descriptor);&#13;
+	update_variables(account_auth_descriptor, variables);&#13;
+}&#13;
+&#13;
+/*&#13;
+ * auth descriptor cleanup&#13;
+ */&#13;
+&#13;
+function delete_expired_auth_descriptors(account) {&#13;
+	val auth_descriptors = account_auth_descriptor @* { account };&#13;
+	&#13;
+	for (auth_descriptor in auth_descriptors) {&#13;
+		if (not (is_active(auth_descriptor) and is_valid(auth_descriptor))) {&#13;
+			_delete_auth_descriptor(auth_descriptor);&#13;
+		}&#13;
+	}&#13;
+}&#13;
+&#13;
+/****************************************************************************************&#13;
+ *                                     block_time                                       *&#13;
+ ****************************************************************************************/&#13;
+&#13;
+function is_block_time_rule_active(r: gtv): boolean {&#13;
+	val parameters = list&lt;gtv&gt;.from_gtv(r);&#13;
+	val operator = rule_operator.value(text.from_gtv(parameters[1]));&#13;
+	val value = integer.from_gtv(parameters[2]);&#13;
+	when (operator) {&#13;
+		rule_operator.gt -&gt; {&#13;
+			return op_context.last_block_time &gt; value;&#13;
+		}&#13;
+		rule_operator.ge,&#13;
+		rule_operator.eq -&gt; {&#13;
+			return op_context.last_block_time &gt;= value;&#13;
+		}&#13;
+		else -&gt; {&#13;
+			return true;&#13;
+		}&#13;
+	}&#13;
+}&#13;
+&#13;
+&#13;
+/****************************************************************************************&#13;
+ *                                  block_height                                        *&#13;
+ ****************************************************************************************/&#13;
+&#13;
+function is_block_height_rule_active(r: gtv): boolean {&#13;
+	val parameters = list&lt;gtv&gt;.from_gtv(r);&#13;
+	val operator = rule_operator.value(text.from_gtv(parameters[1]));&#13;
+	val value = integer.from_gtv(parameters[2]);&#13;
+	when (operator) {&#13;
+		rule_operator.gt -&gt; {&#13;
+			return op_context.block_height &gt; value;&#13;
+		}&#13;
+		rule_operator.ge,&#13;
+		rule_operator.eq -&gt; {&#13;
+			return op_context.block_height &gt;= value;&#13;
+		}&#13;
+		else -&gt; {&#13;
+			return true;&#13;
+		}&#13;
+	}&#13;
+}&#13;
+&#13;
+&#13;
+/****************************************************************************************&#13;
+ *                                     op_count                                         *&#13;
+ ****************************************************************************************/&#13;
+ &#13;
+ function op_count_variable_initial_value(): gtv {&#13;
+ 	return (1).to_gtv();&#13;
+ }&#13;
+ &#13;
+ function is_op_count_rule_active(rule: gtv): boolean {&#13;
+ 	return true;&#13;
+ }</string>
+                            </entry>
+                            <entry key="lib/ft3/account/module.rell">
+                                <string>@mount('ft3')&#13;
+module;&#13;
+&#13;
+import core: ^.core;&#13;
+&#13;
+struct auth_descriptor {&#13;
+    auth_type: text;&#13;
+    participants: list&lt;byte_array&gt;;&#13;
+    args: list&lt;gtv&gt;;&#13;
+    rules: gtv;&#13;
+}&#13;
+&#13;
+entity account {&#13;
+    key id: byte_array;&#13;
+}&#13;
+&#13;
+entity account_meta {&#13;
+    meta_key: text;&#13;
+    value: byte_array;&#13;
+    index account, meta_key;&#13;
+    index meta_key, value;&#13;
+}&#13;
+&#13;
+entity account_auth_descriptor {&#13;
+     descriptor_id: byte_array;&#13;
+     key account, descriptor_id;&#13;
+     index descriptor_id;&#13;
+     auth_type: text;&#13;
+     args: byte_array;&#13;
+     rules: byte_array;&#13;
+}&#13;
+&#13;
+entity auth_descriptor_participant {&#13;
+    key account_auth_descriptor, id: byte_array;&#13;
+}&#13;
+&#13;
+&#13;
+// rate limiter&#13;
+entity rl_state {&#13;
+    key account;&#13;
+    mutable points: integer;&#13;
+    mutable last_update: timestamp;&#13;
+    mutable max_points: integer;&#13;
+    mutable recovery_time: timestamp;&#13;
+}&#13;
+&#13;
+function _add_auth_descriptor (account, auth_descriptor) {&#13;
+     val descriptor_id = auth_descriptor.hash();&#13;
+     &#13;
+     analyze_auth_descriptor_rules(auth_descriptor.rules, 0);&#13;
+     &#13;
+     val account_auth_descriptor = create account_auth_descriptor (&#13;
+        account, descriptor_id,&#13;
+        auth_descriptor.auth_type,&#13;
+        args = auth_descriptor.args.to_gtv().to_bytes(),&#13;
+        rules = auth_descriptor.rules.to_gtv().to_bytes()&#13;
+     );&#13;
+     &#13;
+     for (participant in auth_descriptor.participants) {&#13;
+        require(is_signer(participant));&#13;
+        create auth_descriptor_participant(account_auth_descriptor, id = participant);&#13;
+     }&#13;
+     &#13;
+     setup_auth_descriptor_variables(account_auth_descriptor);&#13;
+}&#13;
+&#13;
+function _delete_auth_descriptor(auth_descriptor: account_auth_descriptor) {&#13;
+	delete auth_descriptor_rule_variable @* { auth_descriptor };&#13;
+	delete auth_descriptor_participant @* { auth_descriptor };&#13;
+	delete auth_descriptor;&#13;
+}&#13;
+&#13;
+function _delete_all_auth_descriptors_exclude(account, auth_descriptor_id: byte_array) {&#13;
+	delete (adrv: auth_descriptor_rule_variable, ad: account_auth_descriptor) @* {&#13;
+		ad.account == account, ad.descriptor_id != auth_descriptor_id, adrv.account_auth_descriptor == ad		&#13;
+	};&#13;
+	&#13;
+	delete (adp: auth_descriptor_participant, ad: account_auth_descriptor) @* {&#13;
+        ad.account == account and ad.descriptor_id != auth_descriptor_id and adp.account_auth_descriptor == ad&#13;
+    };&#13;
+&#13;
+    delete account_auth_descriptor @* {&#13;
+       .account == account,&#13;
+       .descriptor_id != auth_descriptor_id&#13;
+    };&#13;
+}&#13;
+&#13;
+function create_account_with_auth (auth_descriptor): byte_array {&#13;
+     val id = auth_descriptor.hash();&#13;
+     val acc = create account (id);&#13;
+     _add_auth_descriptor(&#13;
+        acc, auth_descriptor&#13;
+     );&#13;
+     val max_points = core.my_blockchain_info.rate_limit_max_points;&#13;
+     val recovery_time = core.my_blockchain_info.rate_limit_recovery_time;&#13;
+     val points_at_start = core.my_blockchain_info.rate_limit_points_at_account_creation;&#13;
+     &#13;
+	create rl_state(acc, .points = points_at_start, .last_update = op_context.last_block_time, max_points, recovery_time);&#13;
+    &#13;
+    return id;&#13;
+}&#13;
+&#13;
+function auth_and_log(account_id: byte_array, auth_descriptor_id: byte_array, required_flags: list&lt;text&gt;): account {&#13;
+	val account = account @ { .id == account_id };&#13;
+	rate_limit(account);&#13;
+	require_auth(account, auth_descriptor_id, required_flags);&#13;
+	return account;&#13;
+}&#13;
+&#13;
+query is_auth_descriptor_valid(account_id: byte_array, auth_descriptor_id: byte_array) {&#13;
+    return is_valid(account_auth_descriptor @ {&#13;
+        .account.id == account_id,&#13;
+        .descriptor_id == auth_descriptor_id&#13;
+    });&#13;
+}&#13;
+&#13;
+query get_account_auth_descriptors(id: byte_array) {&#13;
+    return account_auth_descriptor @* {&#13;
+        .account.id == id&#13;
+    } (&#13;
+        id = .descriptor_id,&#13;
+        type = .auth_type,&#13;
+        args = .args&#13;
+    );&#13;
+}&#13;
+&#13;
+query get_account_by_id(id: byte_array) {&#13;
+    return account @? { id } ( .id );&#13;
+}&#13;
+&#13;
+query get_account_by_auth_descriptor(auth_descriptor) {&#13;
+    return account @? { .id == auth_descriptor.hash() } ( .id );&#13;
+}&#13;
+&#13;
+query get_accounts_by_participant_id(id: byte_array) {&#13;
+    return auth_descriptor_participant @* { id } ( .account_auth_descriptor.account.id );&#13;
+}&#13;
+&#13;
+query get_accounts_by_auth_descriptor_id(descriptor_id: byte_array) {&#13;
+    return account_auth_descriptor @* { descriptor_id } ( .account.id );&#13;
+}&#13;
+</string>
+                            </entry>
+                            <entry key="lib/ft3/account/rate_limit.rell">
+                                <string>import ^.core;&#13;
+&#13;
+&#13;
+function rate_limit (account) {&#13;
+	if(core.my_blockchain_info.rate_limit_active == false ) return;&#13;
+    val max_counter = core.my_blockchain_info.rate_limit_max_points;&#13;
+    val recovery_time = core.my_blockchain_info.rate_limit_recovery_time;&#13;
+    val stat = rl_state@{account} (.points, .last_update);&#13;
+    val delta = op_context.last_block_time - stat.last_update;&#13;
+    var got_points = 0;&#13;
+    var update_time = stat.last_update;&#13;
+&#13;
+    if (delta &gt; recovery_time)&#13;
+    {&#13;
+        got_points = delta / recovery_time;&#13;
+        update_time = stat.last_update + got_points * recovery_time;&#13;
+        if (got_points + stat.points &gt; max_counter) {&#13;
+            got_points = max_counter - stat.points;&#13;
+            // if user is at maximum reset his &#13;
+            // timer&#13;
+            update_time = op_context.last_block_time;&#13;
+        }&#13;
+    }&#13;
+    &#13;
+    require(stat.points + got_points &gt; 0);&#13;
+    &#13;
+    update rl_state@{account} (&#13;
+        .points += got_points - 1,&#13;
+        .last_update = update_time&#13;
+    );&#13;
+}&#13;
+&#13;
+&#13;
+query get_account_rate_limit_last_update(account_id: byte_array) {&#13;
+	if(core.my_blockchain_info.rate_limit_active == false ) return (points = 0, last_update = 0);&#13;
+	val t= rl_state@{.account.id == account_id}&#13;
+	(&#13;
+		.points, &#13;
+		.last_update&#13;
+	);&#13;
+	&#13;
+	return t;&#13;
+}&#13;
+&#13;
+query get_last_timestamp(): integer {&#13;
+	return (block@{.timestamp&gt;0}(@sort_desc .timestamp) limit 1);&#13;
+}</string>
+                            </entry>
+                            <entry key="lib/ft3/core/asset.rell">
+                                <string>import acc: ^.account;&#13;
+&#13;
+entity asset {&#13;
+    id: byte_array;&#13;
+    key id;&#13;
+    name;&#13;
+    issuing_chain_rid: byte_array;&#13;
+}&#13;
+&#13;
+entity balance {&#13;
+    key acc.account, asset;&#13;
+    mutable amount: integer = 0;&#13;
+}&#13;
+&#13;
+function ensure_balance(acc.account, asset): balance {&#13;
+    val balance = balance @? {asset, account};&#13;
+    if (balance != null) {&#13;
+       return balance;&#13;
+    }&#13;
+    else return create balance(account, asset, amount = 0);&#13;
+}&#13;
+&#13;
+function register_asset (name, issuing_chain_rid: byte_array): asset {&#13;
+   val id = (name, issuing_chain_rid).hash();&#13;
+   return create asset (id, name, issuing_chain_rid);&#13;
+}&#13;
+&#13;
+function _get_asset_balances(account_id: byte_array): list&lt;(id:byte_array,name:text,amount:integer,chain_id:byte_array)&gt; {&#13;
+    return balance @* { .account.id == account_id } (&#13;
+      id = .asset.id,&#13;
+      name = .asset.name,&#13;
+      amount = .amount,&#13;
+      chain_id = .asset.issuing_chain_rid&#13;
+    );&#13;
+}&#13;
+&#13;
+query get_asset_balances(account_id: byte_array) {&#13;
+    return _get_asset_balances(account_id);&#13;
+}&#13;
+&#13;
+query get_asset_balance(account_id: byte_array, asset_id: byte_array) {&#13;
+    return balance @? {&#13;
+        .account.id == account_id,&#13;
+        .asset.id == asset_id&#13;
+    } (&#13;
+        id = .asset.id,&#13;
+        name = .asset.name,&#13;
+        amount = .amount,&#13;
+        chain_id = .asset.issuing_chain_rid&#13;
+    );&#13;
+}&#13;
+&#13;
+query get_asset_by_name(name) {&#13;
+    return asset @* { name } (&#13;
+        .id,&#13;
+        .name,&#13;
+        .issuing_chain_rid&#13;
+    );&#13;
+    &#13;
+}&#13;
+&#13;
+query get_asset_by_id(asset_id: byte_array) {&#13;
+	return asset@{&#13;
+		.id == asset_id&#13;
+	}(&#13;
+		id = .id,&#13;
+		name = .name,&#13;
+		issuing_chain_rid = .issuing_chain_rid&#13;
+		&#13;
+	);&#13;
+}&#13;
+&#13;
+query get_all_assets() {&#13;
+	return asset@*{}(&#13;
+		id = .id,&#13;
+		name = .name,&#13;
+		issuing_chain_rid = .issuing_chain_rid	&#13;
+	);&#13;
+}</string>
+                            </entry>
+                            <entry key="lib/ft3/core/dev_op.rell">
+                                <string>module;&#13;
+&#13;
+import ft3: ^^.core;&#13;
+import acc: ^^.account;&#13;
+&#13;
+object dev_state {&#13;
+   mutable allow_dev_ops: boolean = true;&#13;
+}&#13;
+&#13;
+function require_dev() {&#13;
+    require(dev_state.allow_dev_ops);&#13;
+}&#13;
+&#13;
+function dev_give_points_(account: acc.account, amount: integer) {&#13;
+	require_dev();&#13;
+	update acc.rl_state@{account}(.points += amount);&#13;
+}</string>
+                            </entry>
+                            <entry key="lib/ft3/core/history.rell">
+                                <string>import acc: ^.account;&#13;
+&#13;
+@log entity payment_history_entry {&#13;
+    index acc.account, asset;&#13;
+    delta: integer;&#13;
+&#13;
+    // helps to locate exact position of payment entry in transaction&#13;
+    op_index: integer;&#13;
+    is_input: boolean;&#13;
+    entry_index: integer;&#13;
+}&#13;
+&#13;
+query get_payment_history(account_id: byte_array, after_block: integer) {&#13;
+    return payment_history_entry @* {&#13;
+        acc.account @ { account_id },&#13;
+        .transaction.block.block_height &gt; after_block&#13;
+    } (&#13;
+        delta = .delta,&#13;
+        asset = .asset.name,&#13;
+        asset_id = .asset.id,&#13;
+        is_input = .is_input,&#13;
+        timestamp = .transaction.block.timestamp,&#13;
+        block_height = .transaction.block.block_height,&#13;
+        entry_index = .entry_index,&#13;
+        tx_rid = .transaction.tx_rid,&#13;
+        tx_data = .transaction.tx_data&#13;
+    );&#13;
+}&#13;
+</string>
+                            </entry>
+                            <entry key="lib/ft3/core/module.rell">
+                                <string>@mount('ft3')&#13;
+module;&#13;
+&#13;
+struct module_args {&#13;
+	my_blockchain_name: text;&#13;
+	my_blockchain_website: text;&#13;
+	my_blockchain_description: text;&#13;
+	rate_limit_active: boolean;&#13;
+	rate_limit_max_points: integer;&#13;
+    rate_limit_recovery_time: integer;&#13;
+    rate_limit_points_at_account_creation: integer;    &#13;
+}</string>
+                            </entry>
+                            <entry key="lib/ft3/core/my_blockchain_info.rell">
+                                <string>&#13;
+object my_blockchain_info {&#13;
+    mutable name: text = chain_context.args.my_blockchain_name;&#13;
+    mutable website: text = chain_context.args.my_blockchain_website;&#13;
+    mutable description: text = chain_context.args.my_blockchain_description;&#13;
+    mutable rate_limit_active: boolean = chain_context.args.rate_limit_active;&#13;
+    mutable rate_limit_max_points: integer = chain_context.args.rate_limit_max_points;&#13;
+    mutable rate_limit_recovery_time: integer = chain_context.args.rate_limit_recovery_time;&#13;
+    mutable rate_limit_points_at_account_creation: integer = chain_context.args.rate_limit_points_at_account_creation;&#13;
+}&#13;
+&#13;
+&#13;
+//operation update_blockchain(name, website: text, description: text) {&#13;
+//    blockchain.name = name;&#13;
+//    blockchain.website = website;&#13;
+//    blockchain.description = description;&#13;
+//}&#13;
+&#13;
+query get_blockchain_info() {&#13;
+    return (&#13;
+        name = my_blockchain_info.name,&#13;
+        website = my_blockchain_info.website,&#13;
+        description = my_blockchain_info.description,&#13;
+        rate_limit_active = my_blockchain_info.rate_limit_active,&#13;
+        rate_limit_max_points = my_blockchain_info.rate_limit_max_points,&#13;
+        rate_limit_recovery_time = my_blockchain_info.rate_limit_recovery_time,&#13;
+        rate_limit_points_at_account_creation = chain_context.args.rate_limit_points_at_account_creation&#13;
+    );&#13;
+}&#13;
+&#13;
+</string>
+                            </entry>
+                            <entry key="lib/ft3/core/transfer.rell">
+                                <string>import acc: ^.account;&#13;
+&#13;
+struct xfer_input {&#13;
+   account_id: byte_array;&#13;
+   asset_id: byte_array;&#13;
+   auth_descriptor_id: byte_array;&#13;
+   amount: integer;&#13;
+   extra: map&lt;text, gtv&gt;;&#13;
+}&#13;
+&#13;
+struct xfer_output {&#13;
+   account_id: byte_array;&#13;
+   asset_id: byte_array;&#13;
+   amount: integer;&#13;
+   extra: map&lt;text, gtv&gt;;&#13;
+}&#13;
+&#13;
+function deduct_balance (acc.account, asset, d_amount: integer) {&#13;
+    val b = balance @ { account, asset };&#13;
+    require( b.amount &gt;= d_amount, "Balance is too low");&#13;
+    update b (amount -= d_amount);&#13;
+}&#13;
+&#13;
+function consume_input (i: xfer_input, idx: integer, assets: map&lt;asset, integer&gt;): payment_history_entry {&#13;
+      val asset = asset @ { .id == i.asset_id };&#13;
+      val account = acc.auth_and_log(i.account_id, i.auth_descriptor_id, ["T"]);&#13;
+      require( i.amount &gt; 0, "Amount should be non 0 positive." );&#13;
+&#13;
+      deduct_balance(account, asset, i.amount);&#13;
+      assets[asset] = i.amount + if (asset in assets) assets[asset] else 0;&#13;
+      return create payment_history_entry (&#13;
+        account,&#13;
+        asset,&#13;
+        .delta = i.amount,&#13;
+        .op_index = 500, //op_context ???&#13;
+        .is_input = true,&#13;
+        .entry_index = idx&#13;
+      );&#13;
+}&#13;
+&#13;
+function process_transfer_output (o: xfer_output, idx: integer, available_assets: map&lt;asset, integer&gt;): payment_history_entry {&#13;
+      if (o.extra.contains("reg_auth_desc")) {&#13;
+          val auth_desc = acc.auth_descriptor.from_gtv(o.extra["reg_auth_desc"]);&#13;
+          require(o.account_id&#13;
+           == acc.create_account_with_auth(auth_desc));&#13;
+      }&#13;
+&#13;
+      val target_account = acc.account @ { .id == o.account_id };&#13;
+      val asset = asset @ { .id == o.asset_id };&#13;
+      require(o.amount &gt; 0, "You cannot tx output negative numbers");&#13;
+      require( available_assets[asset] &gt;= o.amount );&#13;
+      available_assets[asset] -= o.amount;&#13;
+      require(available_assets[asset] &gt;= 0);&#13;
+      val balance = ensure_balance(target_account, asset);&#13;
+      balance.amount += o.amount;&#13;
+&#13;
+      return create payment_history_entry (&#13;
+        .account = target_account,&#13;
+        asset,&#13;
+        .delta = o.amount,&#13;
+&#13;
+        .op_index = 500, // something from op_context,&#13;
+        .is_input = false,&#13;
+        .entry_index = idx&#13;
+      );&#13;
+}&#13;
+&#13;
+function _transfer (inputs: list&lt;xfer_input&gt;, outputs: list&lt;xfer_output&gt;) {&#13;
+   val sum_inputs = map&lt;asset, integer&gt;();&#13;
+   var idx = 0;&#13;
+   for (i in inputs) {&#13;
+      consume_input(i, idx, sum_inputs);&#13;
+      idx += 1;&#13;
+   }&#13;
+&#13;
+   idx = 0;&#13;
+   for (o in outputs) {&#13;
+      process_transfer_output(o, idx, sum_inputs);&#13;
+      idx += 1;&#13;
+   }&#13;
+}&#13;
+</string>
+                            </entry>
+                            <entry key="lib/ft3/crosschain/blockchain.rell">
+                                <string>import ft3: ^.core;&#13;
+import acc: ^.account;&#13;
+&#13;
+&#13;
+entity asset_origin {&#13;
+    key ft3.asset;&#13;
+    origin_chain_rid: byte_array;&#13;
+}&#13;
+&#13;
+entity linked_chain {&#13;
+    key chain_rid: byte_array;&#13;
+}&#13;
+&#13;
+function blockchain_account_id (blockchain_rid: byte_array): byte_array {&#13;
+   return ("B", blockchain_rid).hash();&#13;
+}&#13;
+&#13;
+function ensure_blockchain_account (blockchain_rid: byte_array): acc.account {&#13;
+   val blockchain_account_id = blockchain_account_id(blockchain_rid);&#13;
+   val acc = acc.account @? { .id == blockchain_account_id };&#13;
+   return if (acc??)  acc&#13;
+   else create acc.account (id = blockchain_account_id);&#13;
+}&#13;
+&#13;
+function get_blockchain_account (blockchain_rid: byte_array): acc.account {&#13;
+   return acc.account @ { .id == blockchain_account_id(blockchain_rid) };&#13;
+}&#13;
+&#13;
+&#13;
+query get_linked_chains() {&#13;
+    return linked_chain @* {} ( .chain_rid );&#13;
+}&#13;
+&#13;
+query is_linked_with_chain(chain_rid: byte_array) {&#13;
+    return linked_chain @? { chain_rid } != null;&#13;
+}&#13;
+</string>
+                            </entry>
+                            <entry key="lib/ft3/crosschain/module.rell">
+                                <string>@mount('ft3.xc')&#13;
+module;&#13;
+</string>
+                            </entry>
+                            <entry key="lib/ft3/crosschain/structures.rell">
+                                <string>struct operation_rec {&#13;
+   name;&#13;
+   args: list&lt;gtv&gt;;&#13;
+}&#13;
+&#13;
+struct transaction_body_rec {&#13;
+    blockchain_rid: byte_array;&#13;
+    operations: list&lt;operation_rec&gt;;&#13;
+    signers: list&lt;gtv&gt;;&#13;
+}&#13;
+&#13;
+struct transaction_rec {&#13;
+   body: transaction_body_rec;&#13;
+   signatures: list&lt;gtv&gt;;&#13;
+}&#13;
+&#13;
+struct transaction_proof {&#13;
+     tx: virtual&lt;transaction_rec&gt;;&#13;
+     // block_header: byte_array;&#13;
+     // merkle_path: virtual&lt;list&lt;byte_array&gt;&gt;;&#13;
+     // tx_index: integer;&#13;
+     block_rid: byte_array;&#13;
+     block_signers: list&lt;byte_array&gt;;&#13;
+     signatures: list&lt;byte_array&gt;;     &#13;
+}&#13;
+&#13;
+function verify_transaction_proof( p: transaction_proof ) {&#13;
+   // TODO&#13;
+}</string>
+                            </entry>
+                            <entry key="lib/ft3/crosschain/transfer.rell">
+                                <string>import ft3: ^.core;&#13;
+&#13;
+struct xc_target {&#13;
+    account_id: byte_array;&#13;
+    extra: map&lt;text, gtv&gt;;&#13;
+}&#13;
+&#13;
+function add_to_blockchain_balance (blockchain_rid: byte_array, ft3.asset, amount: integer) {&#13;
+    require( chain_context.blockchain_rid != blockchain_rid ); // cannot add to own account&#13;
+&#13;
+    val origin_chain_rid = asset_origin @? { asset } .origin_chain_rid;&#13;
+&#13;
+    if (exists(origin_chain_rid) and (blockchain_rid == origin_chain_rid)) {&#13;
+       // do nothing. in future we might track origin&#13;
+    } else {&#13;
+         val bc_acc = ensure_blockchain_account(blockchain_rid);&#13;
+         ft3.ensure_balance(bc_acc, asset).amount += amount;&#13;
+    }&#13;
+}&#13;
+&#13;
+&#13;
+struct init_xfer_args {&#13;
+          source: ft3.xfer_input;&#13;
+          target: xc_target;&#13;
+          hops: list&lt;byte_array&gt;;&#13;
+}&#13;
+&#13;
+entity applied_transfers { key tx_rid: byte_array; }&#13;
+&#13;
+&#13;
+</string>
+                            </entry>
+                            <entry key="lib/ft3/operations/dev_op_account.rell">
+                                <string>@mount('ft3')&#13;
+module;&#13;
+&#13;
+import dev_op: ^^.core.dev_op;&#13;
+import acc: ^^.account; &#13;
+&#13;
+&#13;
+operation dev_register_account (acc.auth_descriptor) {&#13;
+    dev_op.require_dev();&#13;
+    acc.create_account_with_auth( auth_descriptor );&#13;
+}&#13;
+</string>
+                            </entry>
+                            <entry key="lib/ft3/operations/dev_op_asset.rell">
+                                <string>@mount('ft3')&#13;
+module;&#13;
+&#13;
+import dev_op: ^^.core.dev_op;&#13;
+import ft3: ^^.core;&#13;
+&#13;
+import xft3: ^^.crosschain; &#13;
+&#13;
+operation dev_register_asset (name, issuing_chain_rid: byte_array) {&#13;
+    dev_op.require_dev();&#13;
+    ft3.register_asset(name, issuing_chain_rid);&#13;
+}&#13;
+&#13;
+operation dev_register_xc_asset (name, issuing_chain_rid: byte_array, origin_chain_rid: byte_array) {&#13;
+    dev_op.require_dev();   &#13;
+    val asset = ft3.register_asset(name, issuing_chain_rid);&#13;
+    create xft3.asset_origin (asset, origin_chain_rid);&#13;
+}&#13;
+</string>
+                            </entry>
+                            <entry key="lib/ft3/operations/dev_op_balance.rell">
+                                <string>@mount('ft3')&#13;
+module;&#13;
+&#13;
+import dev_op: ^^.core.dev_op;&#13;
+import ft3: ^^.core;&#13;
+import acc: ^^.account;&#13;
+&#13;
+&#13;
+operation dev_give_balance (asset_id: byte_array, account_id: byte_array, amount: integer) {&#13;
+    dev_op.require_dev();&#13;
+    require(amount &gt;= 0);&#13;
+    ft3.ensure_balance( acc.account @ { account_id }, ft3.asset @ { .id == asset_id } ).amount += amount;&#13;
+}</string>
+                            </entry>
+                            <entry key="main.rell">
+                                <string>module;&#13;
+&#13;
+import lib.ft3.operations.dev_op_account;&#13;
+import lib.ft3.operations.dev_op_asset;&#13;
+import lib.ft3.operations.dev_op_balance;&#13;
+&#13;
+namespace game{&#13;
+  import ^.game;&#13;
+}</string>
+                            </entry>
+                        </dict>
+                    </entry>
+                </dict>
+            </entry>
+        </dict>
+    </entry>
+    <entry key="signers">
+        <array>
+            <bytea>0350FE40766BC0CE8D08B3F5B810E49A8352FDD458606BD5FAFE5ACDCDC8FF3F57</bytea>
+        </array>
+    </entry>
+</dict>
