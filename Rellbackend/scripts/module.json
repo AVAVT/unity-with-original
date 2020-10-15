@@ -1,0 +1,9 @@
+{
+    "directory": "rell/src/rell_modules/",
+    "dependencies": {
+        "ft3": {
+            "repository": "git@bitbucket.org:chromawallet/ft3-lib.git",
+            "subdirectory": "rell/src/lib/ft3"
+        }
+    }
+}

@@ -1,0 +1,24 @@
+import ^.lib.interface.*;
+import ^.lib.structure;
+import ^.lib.instance;
+import ^.lib.original.*;
+import ^.lib.marketplace.*;
+import ^.lib.marketplace.queries;
+import ^.lib.marketplace.operations;
+import ^.lib.structure.operations.dev;
+
+// this is just so that other files in this module (this folder) can use .ft3.acc directly instead of writting the whole import
+namespace ft3 {
+  import acc: rell_modules.ft3.account;
+  import core: rell_modules.ft3.core;
+}
+
+namespace original {
+	import ^.lib.original.operations;
+	import ^.lib.original.operations.dev;
+}
+
+struct module_args {
+  admin_pubkey: pubkey;
+  token_name: text;
+}

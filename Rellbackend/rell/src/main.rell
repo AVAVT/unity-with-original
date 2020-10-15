@@ -1,0 +1,9 @@
+module;
+
+import rell_modules.ft3.operations.dev_op_account;
+import rell_modules.ft3.operations.dev_op_asset;
+import rell_modules.ft3.operations.dev_op_balance;
+
+namespace game{
+  import ^.game;
+}

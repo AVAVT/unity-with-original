@@ -1,0 +1,479 @@
+INFO  2020-10-15 22:41:58.997 [main] SQLDatabaseAccess - Meta table does not exist! Assume database does not exist and create it (version: 1).
+INFO  2020-10-15 22:42:00.696 [main] RestApi - Rest API listening on port 7740 and were given 7740
+INFO  2020-10-15 22:42:00.697 [main] RestApi - Rest API attached on /
+INFO  2020-10-15 22:42:00.837 [main] BaseBlockchainProcessManager - [03:57]: Stopping of Blockchain: chainId: 0
+INFO  2020-10-15 22:42:00.838 [main] BaseBlockchainProcessManager - [03:57]: Blockchain has been stopped: chainId: 0
+INFO  2020-10-15 22:42:00.840 [main] BaseBlockchainProcessManager - [03:57]: Starting of Blockchain: chainId: 0
+INFO  2020-10-15 22:42:02.108 [main] Rell - ERROR Module initialization failed: No moduleArgs in blockchain configuration for module 'rell_modules.ft3.core', but type module_args defined in the code
+ERROR 2020-10-15 22:42:02.111 [main] BaseBlockchainProcessManager - Module initialization failed: No moduleArgs in blockchain configuration for module 'rell_modules.ft3.core', but type module_args defined in the code
+net.postchain.core.UserMistake: Module initialization failed: No moduleArgs in blockchain configuration for module 'rell_modules.ft3.core', but type module_args defined in the code
+	at net.postchain.rell.module.ErrorHandler.handleError(postchain.kt:54) ~[rellr-0.10.3-jar-with-dependencies.jar:?]
+	at net.postchain.rell.module.RellPostchainModuleFactory.makeModule(postchain.kt:326) ~[rellr-0.10.3-jar-with-dependencies.jar:?]
+	at net.postchain.gtx.GTXBlockchainConfigurationFactory$createGtxModule$1.invoke(configuration.kt:81) ~[postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at net.postchain.gtx.GTXBlockchainConfigurationFactory.createGtxModule(configuration.kt:89) ~[postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at net.postchain.gtx.GTXBlockchainConfigurationFactory.makeBlockchainConfiguration(configuration.kt:66) ~[postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at net.postchain.base.BaseBlockchainInfrastructure.makeBlockchainConfiguration(BaseBlockchainInfrastructure.kt:66) ~[postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at net.postchain.base.BaseBlockchainProcessManager$startBlockchain$$inlined$synchronized$lambda$1.invoke(BaseBlockchainProcessManager.kt:74) ~[postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at net.postchain.base.BaseBlockchainProcessManager$startBlockchain$$inlined$synchronized$lambda$1.invoke(BaseBlockchainProcessManager.kt:23) ~[postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at net.postchain.base.StorageConnectionKt.withReadWriteConnection(StorageConnection.kt:84) ~[postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at net.postchain.base.BaseBlockchainProcessManager.startBlockchain(BaseBlockchainProcessManager.kt:70) [postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at net.postchain.PostchainNode.startBlockchain(PostchainNode.kt:35) [postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at net.postchain.cli.CliExecution.runNode(CliExecution.kt:111) [postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at net.postchain.cli.CommandRunNodeAuto.execute(CommandRunNodeAuto.kt:76) [postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at net.postchain.cli.Cli.parse(Cli.kt:48) [postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at net.postchain.AppKt.main(app.kt:13) [postchain-base-3.3.0-jar-with-dependencies.jar:?]
+Caused by: net.postchain.core.UserMistake: No moduleArgs in blockchain configuration for module 'rell_modules.ft3.core', but type module_args defined in the code
+	at net.postchain.rell.module.RellPostchainModuleFactory.createChainContext(postchain.kt:499) ~[rellr-0.10.3-jar-with-dependencies.jar:?]
+	at net.postchain.rell.module.RellPostchainModuleFactory.access$createChainContext(postchain.kt:314) ~[rellr-0.10.3-jar-with-dependencies.jar:?]
+	at net.postchain.rell.module.RellPostchainModuleFactory$makeModule$2.invoke(postchain.kt:331) ~[rellr-0.10.3-jar-with-dependencies.jar:?]
+	at net.postchain.rell.module.RellPostchainModuleFactory$makeModule$2.invoke(postchain.kt:314) ~[rellr-0.10.3-jar-with-dependencies.jar:?]
+	at net.postchain.rell.module.ErrorHandler.handleError(postchain.kt:50) ~[rellr-0.10.3-jar-with-dependencies.jar:?]
+	... 14 more
+INFO  2020-10-15 22:42:52.692 [main] SQLDatabaseAccess - Meta table does not exist! Assume database does not exist and create it (version: 1).
+INFO  2020-10-15 22:42:57.626 [main] RestApi - Rest API listening on port 7740 and were given 7740
+INFO  2020-10-15 22:42:57.630 [main] RestApi - Rest API attached on /
+INFO  2020-10-15 22:42:57.770 [main] BaseBlockchainProcessManager - [03:57]: Stopping of Blockchain: chainId: 0
+INFO  2020-10-15 22:42:57.770 [main] BaseBlockchainProcessManager - [03:57]: Blockchain has been stopped: chainId: 0
+INFO  2020-10-15 22:42:57.771 [main] BaseBlockchainProcessManager - [03:57]: Starting of Blockchain: chainId: 0
+DEBUG 2020-10-15 22:42:59.026 [main] GTXBlockchainConfiguration - Running initialize DB of class GTXBlockchainConfiguration
+DEBUG 2020-10-15 22:42:59.104 [main] CompositeGTXModule - Initialize DB for module: net.postchain.rell.module.RellPostchainModule@472d0f4
+INFO  2020-10-15 22:42:59.123 [main] SqlInit - Initializing database (chain_iid = 0)
+DEBUG 2020-10-15 22:43:00.383 [main] CompositeGTXModule - Initialize DB for module: net.postchain.gtx.StandardOpsGTXModule@5e0c4f21
+DEBUG 2020-10-15 22:43:00.384 [main] BaseBlockchainProcessManager - [03:57]/[8F:88]: BlockchainConfiguration has been created: chainId: 0
+DEBUG 2020-10-15 22:43:00.512 [main] BaseBlockchainProcessManager - [03:57]/[8F:88]: BlockchainEngine has been created: chainId: 0
+DEBUG 2020-10-15 22:43:00.519 [main] DefaultXConnectionManager - [03:57]/[8F:88]: Connecting chain: 0, blockchainRID: 8F:88
+DEBUG 2020-10-15 22:43:00.520 [main] DefaultXConnectionManager - [03:57]/[8F:88]: Chain connected: 0
+DEBUG 2020-10-15 22:43:00.546 [main] BaseBlockchainProcessManager - [03:57]/[8F:88]: BlockchainProcess has been launched: chainId: 0
+INFO  2020-10-15 22:43:00.548 [main] BaseBlockchainProcessManager - [03:57]/[8F:88]: Blockchain has been started: chainId: 0
+DEBUG 2020-10-15 22:43:10.556 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:43:10.557 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:0 ro:1 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:43:20.567 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:43:20.567 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:0 ro:1 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:43:30.517 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Starting job buildBlock
+DEBUG 2020-10-15 22:43:30.563 [0-BaseBlockDatabaseWorker] BaseBlockchainEngine - [03:57]/[8F:88]: Checking transaction queue
+INFO  2020-10-15 22:43:30.571 [0-BaseBlockDatabaseWorker] BaseBlockchainEngine - [03:57]/[8F:88]: Block is finalized: 52 ms, 0 net tps, 0 gross tps, height: 0, accepted txs: 0, rejected txs: 0, root-hash: 46AF9064F12528CAD6A7C377204ACD0AC38CDC6912903E7DAB3703764C8DD5E5, block-rid: 5557269505586C3BDF506EAB810B6E156BC4E693FE055FC451905ADD06CD8970, prev-block-rid: 8F905B7DC48EB7E3D9578925D1B6A5E1DE12AC32184CB22BEC92AA7D2CF42088
+DEBUG 2020-10-15 22:43:30.579 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:43:30.579 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:0 ro:2 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:43:30.588 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Finish job buildBlock
+DEBUG 2020-10-15 22:43:30.611 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Starting job commitBlock
+DEBUG 2020-10-15 22:43:30.612 [0-BaseBlockDatabaseWorker] BaseManagedBlockBuilder - -1 committing block - start -------------------
+DEBUG 2020-10-15 22:43:30.651 [0-BaseBlockDatabaseWorker] ManualBlockchainConfigurationProvider - lastHeight: 0, currentConfigHeight: 0, nextConfigHeight: 0
+DEBUG 2020-10-15 22:43:30.651 [0-BaseBlockDatabaseWorker] BaseManagedBlockBuilder - -1 committing block - end -------------------
+DEBUG 2020-10-15 22:43:30.652 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Finish job commitBlock
+DEBUG 2020-10-15 22:43:40.579 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:43:40.580 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:1 ro:0 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:43:50.584 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:43:50.585 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:1 ro:1 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:44:00.579 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Starting job buildBlock
+DEBUG 2020-10-15 22:44:00.595 [0-BaseBlockDatabaseWorker] BaseBlockchainEngine - [03:57]/[8F:88]: Checking transaction queue
+INFO  2020-10-15 22:44:00.600 [0-BaseBlockDatabaseWorker] BaseBlockchainEngine - [03:57]/[8F:88]: Block is finalized: 20 ms, 0 net tps, 0 gross tps, height: 1, accepted txs: 0, rejected txs: 0, root-hash: 46AF9064F12528CAD6A7C377204ACD0AC38CDC6912903E7DAB3703764C8DD5E5, block-rid: 3E60D78C33E5130F465CF674CD1CF0729392FB629C222E52635C68CEBC9959F2, prev-block-rid: 5557269505586C3BDF506EAB810B6E156BC4E693FE055FC451905ADD06CD8970
+DEBUG 2020-10-15 22:44:00.602 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Finish job buildBlock
+DEBUG 2020-10-15 22:44:00.611 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Starting job commitBlock
+DEBUG 2020-10-15 22:44:00.612 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: CBI
+DEBUG 2020-10-15 22:44:00.612 [0-BaseBlockDatabaseWorker] BaseManagedBlockBuilder - -1 committing block - start -------------------
+DEBUG 2020-10-15 22:44:00.612 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:1 ro:2 st:Prepared blockRID:3E60D78C33E5130F465CF674CD1CF0729392FB629C222E52635C68CEBC9959F2 havesig:true
+DEBUG 2020-10-15 22:44:00.631 [0-BaseBlockDatabaseWorker] ManualBlockchainConfigurationProvider - lastHeight: 1, currentConfigHeight: 0, nextConfigHeight: 0
+DEBUG 2020-10-15 22:44:00.633 [0-BaseBlockDatabaseWorker] BaseManagedBlockBuilder - -1 committing block - end -------------------
+DEBUG 2020-10-15 22:44:00.633 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Finish job commitBlock
+DEBUG 2020-10-15 22:44:02.624 [qtp2116945504-16] RestApi - Request body: {"type":"ft3.get_blockchain_info"}
+ERROR 2020-10-15 22:44:02.625 [qtp2116945504-16] RestApi - NotFoundError:
+net.postchain.api.rest.controller.NotFoundError: Can't find blockchain with blockchainRID: fe26ae73a3de978fcb4a57cc310a4c69ea035a76b7a8860e09f02d30a326fee5
+	at net.postchain.api.rest.controller.RestApi.model(RestApi.kt:433) ~[postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at net.postchain.api.rest.controller.RestApi.handlePostQuery(RestApi.kt:298) ~[postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at net.postchain.api.rest.controller.RestApi.access$handlePostQuery(RestApi.kt:33) ~[postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at net.postchain.api.rest.controller.RestApi$buildRouter$2$17.handle(RestApi.kt:216) ~[postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at net.postchain.api.rest.controller.RestApi$buildRouter$2$17.handle(RestApi.kt:33) ~[postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at spark.RouteImpl$1.handle(RouteImpl.java:72) ~[postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at spark.http.matching.Routes.execute(Routes.java:61) ~[postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at spark.http.matching.MatcherFilter.doFilter(MatcherFilter.java:130) ~[postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at spark.embeddedserver.jetty.JettyHandler.doHandle(JettyHandler.java:50) ~[postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:1568) ~[postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:141) ~[postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:132) ~[postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at org.eclipse.jetty.server.Server.handle(Server.java:530) ~[postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at org.eclipse.jetty.server.HttpChannel.handle(HttpChannel.java:347) ~[postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at org.eclipse.jetty.server.HttpConnection.onFillable(HttpConnection.java:256) ~[postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at org.eclipse.jetty.io.AbstractConnection$ReadCallback.succeeded(AbstractConnection.java:279) ~[postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at org.eclipse.jetty.io.FillInterest.fillable(FillInterest.java:102) ~[postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at org.eclipse.jetty.io.ChannelEndPoint$2.run(ChannelEndPoint.java:124) ~[postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.doProduce(EatWhatYouKill.java:247) ~[postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.produce(EatWhatYouKill.java:140) ~[postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:708) [postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$2.run(QueuedThreadPool.java:626) [postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at java.lang.Thread.run(Unknown Source) [?:1.8.0_241]
+DEBUG 2020-10-15 22:44:04.156 [qtp2116945504-21] RestApi - Request body: {"descriptor_id":"9180ca634ebde2f2c685bd803929014fec4ab587512caf17fc4589998cd38199","type":"ft3.get_accounts_by_auth_descriptor_id"}
+ERROR 2020-10-15 22:44:04.156 [qtp2116945504-21] RestApi - NotFoundError:
+net.postchain.api.rest.controller.NotFoundError: Can't find blockchain with blockchainRID: fe26ae73a3de978fcb4a57cc310a4c69ea035a76b7a8860e09f02d30a326fee5
+	at net.postchain.api.rest.controller.RestApi.model(RestApi.kt:433) ~[postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at net.postchain.api.rest.controller.RestApi.handlePostQuery(RestApi.kt:298) ~[postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at net.postchain.api.rest.controller.RestApi.access$handlePostQuery(RestApi.kt:33) ~[postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at net.postchain.api.rest.controller.RestApi$buildRouter$2$17.handle(RestApi.kt:216) ~[postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at net.postchain.api.rest.controller.RestApi$buildRouter$2$17.handle(RestApi.kt:33) ~[postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at spark.RouteImpl$1.handle(RouteImpl.java:72) ~[postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at spark.http.matching.Routes.execute(Routes.java:61) ~[postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at spark.http.matching.MatcherFilter.doFilter(MatcherFilter.java:130) [postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at spark.embeddedserver.jetty.JettyHandler.doHandle(JettyHandler.java:50) [postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at org.eclipse.jetty.server.session.SessionHandler.doScope(SessionHandler.java:1568) [postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at org.eclipse.jetty.server.handler.ScopedHandler.handle(ScopedHandler.java:141) [postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at org.eclipse.jetty.server.handler.HandlerWrapper.handle(HandlerWrapper.java:132) [postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at org.eclipse.jetty.server.Server.handle(Server.java:530) [postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at org.eclipse.jetty.server.HttpChannel.handle(HttpChannel.java:347) [postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at org.eclipse.jetty.server.HttpConnection.onFillable(HttpConnection.java:256) [postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at org.eclipse.jetty.io.AbstractConnection$ReadCallback.succeeded(AbstractConnection.java:279) [postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at org.eclipse.jetty.io.FillInterest.fillable(FillInterest.java:102) [postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at org.eclipse.jetty.io.ChannelEndPoint$2.run(ChannelEndPoint.java:124) [postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.doProduce(EatWhatYouKill.java:247) [postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.produce(EatWhatYouKill.java:140) [postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at org.eclipse.jetty.util.thread.strategy.EatWhatYouKill.run(EatWhatYouKill.java:131) [postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at org.eclipse.jetty.util.thread.ReservedThreadExecutor$ReservedThread.run(ReservedThreadExecutor.java:382) [postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at org.eclipse.jetty.util.thread.QueuedThreadPool.runJob(QueuedThreadPool.java:708) [postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at org.eclipse.jetty.util.thread.QueuedThreadPool$2.run(QueuedThreadPool.java:626) [postchain-base-3.3.0-jar-with-dependencies.jar:?]
+	at java.lang.Thread.run(Unknown Source) [?:1.8.0_241]
+DEBUG 2020-10-15 22:44:10.618 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:44:10.619 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:2 ro:0 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:44:20.641 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:44:20.641 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:2 ro:1 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:44:30.623 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Starting job buildBlock
+DEBUG 2020-10-15 22:44:30.638 [0-BaseBlockDatabaseWorker] BaseBlockchainEngine - [03:57]/[8F:88]: Checking transaction queue
+INFO  2020-10-15 22:44:30.642 [0-BaseBlockDatabaseWorker] BaseBlockchainEngine - [03:57]/[8F:88]: Block is finalized: 18 ms, 0 net tps, 0 gross tps, height: 2, accepted txs: 0, rejected txs: 0, root-hash: 46AF9064F12528CAD6A7C377204ACD0AC38CDC6912903E7DAB3703764C8DD5E5, block-rid: 73477BB5951251CB7CA85D2562F8B164264E785648274D18D5E840D66C1609DD, prev-block-rid: 3E60D78C33E5130F465CF674CD1CF0729392FB629C222E52635C68CEBC9959F2
+DEBUG 2020-10-15 22:44:30.644 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Finish job buildBlock
+DEBUG 2020-10-15 22:44:30.655 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Starting job commitBlock
+DEBUG 2020-10-15 22:44:30.655 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: CBI
+DEBUG 2020-10-15 22:44:30.656 [0-BaseBlockDatabaseWorker] BaseManagedBlockBuilder - -1 committing block - start -------------------
+DEBUG 2020-10-15 22:44:30.656 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:2 ro:2 st:Prepared blockRID:73477BB5951251CB7CA85D2562F8B164264E785648274D18D5E840D66C1609DD havesig:true
+DEBUG 2020-10-15 22:44:30.674 [0-BaseBlockDatabaseWorker] ManualBlockchainConfigurationProvider - lastHeight: 2, currentConfigHeight: 0, nextConfigHeight: 0
+DEBUG 2020-10-15 22:44:30.675 [0-BaseBlockDatabaseWorker] BaseManagedBlockBuilder - -1 committing block - end -------------------
+DEBUG 2020-10-15 22:44:30.675 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Finish job commitBlock
+DEBUG 2020-10-15 22:44:40.663 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:44:40.663 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:3 ro:0 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:44:50.687 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:44:50.687 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:3 ro:1 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:45:00.669 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Starting job buildBlock
+DEBUG 2020-10-15 22:45:00.682 [0-BaseBlockDatabaseWorker] BaseBlockchainEngine - [03:57]/[8F:88]: Checking transaction queue
+INFO  2020-10-15 22:45:00.686 [0-BaseBlockDatabaseWorker] BaseBlockchainEngine - [03:57]/[8F:88]: Block is finalized: 17 ms, 0 net tps, 0 gross tps, height: 3, accepted txs: 0, rejected txs: 0, root-hash: 46AF9064F12528CAD6A7C377204ACD0AC38CDC6912903E7DAB3703764C8DD5E5, block-rid: DA752BC314AC4DDDD65849A9E777FA773F1053D80E7D4A8F1AB00404B70E9124, prev-block-rid: 73477BB5951251CB7CA85D2562F8B164264E785648274D18D5E840D66C1609DD
+DEBUG 2020-10-15 22:45:00.688 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Finish job buildBlock
+DEBUG 2020-10-15 22:45:00.699 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Starting job commitBlock
+DEBUG 2020-10-15 22:45:00.699 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: CBI
+DEBUG 2020-10-15 22:45:00.700 [0-BaseBlockDatabaseWorker] BaseManagedBlockBuilder - -1 committing block - start -------------------
+DEBUG 2020-10-15 22:45:00.700 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:3 ro:2 st:Prepared blockRID:DA752BC314AC4DDDD65849A9E777FA773F1053D80E7D4A8F1AB00404B70E9124 havesig:true
+DEBUG 2020-10-15 22:45:00.717 [0-BaseBlockDatabaseWorker] ManualBlockchainConfigurationProvider - lastHeight: 3, currentConfigHeight: 0, nextConfigHeight: 0
+DEBUG 2020-10-15 22:45:00.717 [0-BaseBlockDatabaseWorker] BaseManagedBlockBuilder - -1 committing block - end -------------------
+DEBUG 2020-10-15 22:45:00.718 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Finish job commitBlock
+DEBUG 2020-10-15 22:45:10.717 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:45:10.717 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:4 ro:0 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:45:20.740 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:45:20.741 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:4 ro:1 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:45:30.709 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Starting job buildBlock
+DEBUG 2020-10-15 22:45:30.719 [0-BaseBlockDatabaseWorker] BaseBlockchainEngine - [03:57]/[8F:88]: Checking transaction queue
+INFO  2020-10-15 22:45:30.722 [0-BaseBlockDatabaseWorker] BaseBlockchainEngine - [03:57]/[8F:88]: Block is finalized: 12 ms, 0 net tps, 0 gross tps, height: 4, accepted txs: 0, rejected txs: 0, root-hash: 46AF9064F12528CAD6A7C377204ACD0AC38CDC6912903E7DAB3703764C8DD5E5, block-rid: 920D9735692B13406C474F83718AF62CECFC1D898B6B5CB86014A8DF08CC81F7, prev-block-rid: DA752BC314AC4DDDD65849A9E777FA773F1053D80E7D4A8F1AB00404B70E9124
+DEBUG 2020-10-15 22:45:30.723 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Finish job buildBlock
+DEBUG 2020-10-15 22:45:30.740 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Starting job commitBlock
+DEBUG 2020-10-15 22:45:30.740 [0-BaseBlockDatabaseWorker] BaseManagedBlockBuilder - -1 committing block - start -------------------
+DEBUG 2020-10-15 22:45:30.755 [0-BaseBlockDatabaseWorker] ManualBlockchainConfigurationProvider - lastHeight: 4, currentConfigHeight: 0, nextConfigHeight: 0
+DEBUG 2020-10-15 22:45:30.755 [0-BaseBlockDatabaseWorker] BaseManagedBlockBuilder - -1 committing block - end -------------------
+DEBUG 2020-10-15 22:45:30.756 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Finish job commitBlock
+DEBUG 2020-10-15 22:45:30.773 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:45:30.773 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:5 ro:0 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:45:40.786 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:45:40.787 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:5 ro:1 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:45:50.809 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:45:50.809 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:5 ro:1 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:46:00.730 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Starting job buildBlock
+DEBUG 2020-10-15 22:46:00.743 [0-BaseBlockDatabaseWorker] BaseBlockchainEngine - [03:57]/[8F:88]: Checking transaction queue
+INFO  2020-10-15 22:46:00.749 [0-BaseBlockDatabaseWorker] BaseBlockchainEngine - [03:57]/[8F:88]: Block is finalized: 18 ms, 0 net tps, 0 gross tps, height: 5, accepted txs: 0, rejected txs: 0, root-hash: 46AF9064F12528CAD6A7C377204ACD0AC38CDC6912903E7DAB3703764C8DD5E5, block-rid: 57B00A475D2EDBF9164ACB7C6CC580CA3C769BA0437C75925F514D25481F0B84, prev-block-rid: 920D9735692B13406C474F83718AF62CECFC1D898B6B5CB86014A8DF08CC81F7
+DEBUG 2020-10-15 22:46:00.750 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Finish job buildBlock
+DEBUG 2020-10-15 22:46:00.761 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Starting job commitBlock
+DEBUG 2020-10-15 22:46:00.762 [0-BaseBlockDatabaseWorker] BaseManagedBlockBuilder - -1 committing block - start -------------------
+DEBUG 2020-10-15 22:46:00.778 [0-BaseBlockDatabaseWorker] ManualBlockchainConfigurationProvider - lastHeight: 5, currentConfigHeight: 0, nextConfigHeight: 0
+DEBUG 2020-10-15 22:46:00.779 [0-BaseBlockDatabaseWorker] BaseManagedBlockBuilder - -1 committing block - end -------------------
+DEBUG 2020-10-15 22:46:00.779 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Finish job commitBlock
+DEBUG 2020-10-15 22:46:00.824 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:46:00.824 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:6 ro:0 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:46:10.840 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:46:10.841 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:6 ro:1 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:46:20.851 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:46:20.851 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:6 ro:2 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:46:30.777 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Starting job buildBlock
+DEBUG 2020-10-15 22:46:30.791 [0-BaseBlockDatabaseWorker] BaseBlockchainEngine - [03:57]/[8F:88]: Checking transaction queue
+INFO  2020-10-15 22:46:30.803 [0-BaseBlockDatabaseWorker] BaseBlockchainEngine - [03:57]/[8F:88]: Block is finalized: 25 ms, 0 net tps, 0 gross tps, height: 6, accepted txs: 0, rejected txs: 0, root-hash: 46AF9064F12528CAD6A7C377204ACD0AC38CDC6912903E7DAB3703764C8DD5E5, block-rid: CEF37F3E55D8587E5CCB61B2EBEE3F12FF3B1841B11C993F6D54740676765822, prev-block-rid: 57B00A475D2EDBF9164ACB7C6CC580CA3C769BA0437C75925F514D25481F0B84
+DEBUG 2020-10-15 22:46:30.805 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Finish job buildBlock
+DEBUG 2020-10-15 22:46:30.810 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Starting job commitBlock
+DEBUG 2020-10-15 22:46:30.810 [0-BaseBlockDatabaseWorker] BaseManagedBlockBuilder - -1 committing block - start -------------------
+DEBUG 2020-10-15 22:46:30.829 [0-BaseBlockDatabaseWorker] ManualBlockchainConfigurationProvider - lastHeight: 6, currentConfigHeight: 0, nextConfigHeight: 0
+DEBUG 2020-10-15 22:46:30.830 [0-BaseBlockDatabaseWorker] BaseManagedBlockBuilder - -1 committing block - end -------------------
+DEBUG 2020-10-15 22:46:30.830 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Finish job commitBlock
+DEBUG 2020-10-15 22:46:30.873 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:46:30.873 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:7 ro:0 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:46:40.893 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:46:40.893 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:7 ro:1 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:46:50.914 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:46:50.915 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:7 ro:2 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:47:00.794 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Starting job buildBlock
+DEBUG 2020-10-15 22:47:00.811 [0-BaseBlockDatabaseWorker] BaseBlockchainEngine - [03:57]/[8F:88]: Checking transaction queue
+INFO  2020-10-15 22:47:00.816 [0-BaseBlockDatabaseWorker] BaseBlockchainEngine - [03:57]/[8F:88]: Block is finalized: 21 ms, 0 net tps, 0 gross tps, height: 7, accepted txs: 0, rejected txs: 0, root-hash: 46AF9064F12528CAD6A7C377204ACD0AC38CDC6912903E7DAB3703764C8DD5E5, block-rid: 8320177AC79BEE13E613F8464FFB0E3488AF33E97B0C5080192DBB445D8591B0, prev-block-rid: CEF37F3E55D8587E5CCB61B2EBEE3F12FF3B1841B11C993F6D54740676765822
+DEBUG 2020-10-15 22:47:00.817 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Finish job buildBlock
+DEBUG 2020-10-15 22:47:00.825 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Starting job commitBlock
+DEBUG 2020-10-15 22:47:00.826 [0-BaseBlockDatabaseWorker] BaseManagedBlockBuilder - -1 committing block - start -------------------
+DEBUG 2020-10-15 22:47:00.844 [0-BaseBlockDatabaseWorker] ManualBlockchainConfigurationProvider - lastHeight: 7, currentConfigHeight: 0, nextConfigHeight: 0
+DEBUG 2020-10-15 22:47:00.844 [0-BaseBlockDatabaseWorker] BaseManagedBlockBuilder - -1 committing block - end -------------------
+DEBUG 2020-10-15 22:47:00.845 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Finish job commitBlock
+DEBUG 2020-10-15 22:47:00.920 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:47:00.920 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:8 ro:0 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:47:10.928 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:47:10.928 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:8 ro:1 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:47:20.930 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:47:20.930 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:8 ro:2 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:47:30.837 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Starting job buildBlock
+DEBUG 2020-10-15 22:47:30.850 [0-BaseBlockDatabaseWorker] BaseBlockchainEngine - [03:57]/[8F:88]: Checking transaction queue
+INFO  2020-10-15 22:47:30.854 [0-BaseBlockDatabaseWorker] BaseBlockchainEngine - [03:57]/[8F:88]: Block is finalized: 16 ms, 0 net tps, 0 gross tps, height: 8, accepted txs: 0, rejected txs: 0, root-hash: 46AF9064F12528CAD6A7C377204ACD0AC38CDC6912903E7DAB3703764C8DD5E5, block-rid: 72928FCB055A8555E3DFFEB0279F6FC0F49CA1D57E52C4F54CF7CF049C40DAB3, prev-block-rid: 8320177AC79BEE13E613F8464FFB0E3488AF33E97B0C5080192DBB445D8591B0
+DEBUG 2020-10-15 22:47:30.855 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Finish job buildBlock
+DEBUG 2020-10-15 22:47:30.869 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Starting job commitBlock
+DEBUG 2020-10-15 22:47:30.870 [0-BaseBlockDatabaseWorker] BaseManagedBlockBuilder - -1 committing block - start -------------------
+DEBUG 2020-10-15 22:47:30.885 [0-BaseBlockDatabaseWorker] ManualBlockchainConfigurationProvider - lastHeight: 8, currentConfigHeight: 0, nextConfigHeight: 0
+DEBUG 2020-10-15 22:47:30.886 [0-BaseBlockDatabaseWorker] BaseManagedBlockBuilder - -1 committing block - end -------------------
+DEBUG 2020-10-15 22:47:30.886 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Finish job commitBlock
+DEBUG 2020-10-15 22:47:30.931 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:47:30.931 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:9 ro:0 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:47:40.959 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:47:40.959 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:9 ro:1 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:47:50.965 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:47:50.965 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:9 ro:2 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:48:00.871 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Starting job buildBlock
+DEBUG 2020-10-15 22:48:00.886 [0-BaseBlockDatabaseWorker] BaseBlockchainEngine - [03:57]/[8F:88]: Checking transaction queue
+INFO  2020-10-15 22:48:00.890 [0-BaseBlockDatabaseWorker] BaseBlockchainEngine - [03:57]/[8F:88]: Block is finalized: 19 ms, 0 net tps, 0 gross tps, height: 9, accepted txs: 0, rejected txs: 0, root-hash: 46AF9064F12528CAD6A7C377204ACD0AC38CDC6912903E7DAB3703764C8DD5E5, block-rid: 26B10D473328D68B5AAB473E59C7D007E6953FC29517EB0A4BF7A06164ECEC9D, prev-block-rid: 72928FCB055A8555E3DFFEB0279F6FC0F49CA1D57E52C4F54CF7CF049C40DAB3
+DEBUG 2020-10-15 22:48:00.892 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Finish job buildBlock
+DEBUG 2020-10-15 22:48:00.904 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Starting job commitBlock
+DEBUG 2020-10-15 22:48:00.904 [0-BaseBlockDatabaseWorker] BaseManagedBlockBuilder - -1 committing block - start -------------------
+DEBUG 2020-10-15 22:48:00.919 [0-BaseBlockDatabaseWorker] ManualBlockchainConfigurationProvider - lastHeight: 9, currentConfigHeight: 0, nextConfigHeight: 0
+DEBUG 2020-10-15 22:48:00.919 [0-BaseBlockDatabaseWorker] BaseManagedBlockBuilder - -1 committing block - end -------------------
+DEBUG 2020-10-15 22:48:00.920 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Finish job commitBlock
+DEBUG 2020-10-15 22:48:00.996 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:48:00.996 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:10 ro:0 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:48:11.014 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:48:11.015 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:10 ro:1 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:48:21.020 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:48:21.020 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:10 ro:2 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:48:30.891 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Starting job buildBlock
+DEBUG 2020-10-15 22:48:30.905 [0-BaseBlockDatabaseWorker] BaseBlockchainEngine - [03:57]/[8F:88]: Checking transaction queue
+INFO  2020-10-15 22:48:30.909 [0-BaseBlockDatabaseWorker] BaseBlockchainEngine - [03:57]/[8F:88]: Block is finalized: 17 ms, 0 net tps, 0 gross tps, height: 10, accepted txs: 0, rejected txs: 0, root-hash: 46AF9064F12528CAD6A7C377204ACD0AC38CDC6912903E7DAB3703764C8DD5E5, block-rid: A6A51600F6E037BAEA63FE2E2BBDF869DA7AD1689C878B1CB7516974EC492C70, prev-block-rid: 26B10D473328D68B5AAB473E59C7D007E6953FC29517EB0A4BF7A06164ECEC9D
+DEBUG 2020-10-15 22:48:30.910 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Finish job buildBlock
+DEBUG 2020-10-15 22:48:30.923 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Starting job commitBlock
+DEBUG 2020-10-15 22:48:30.924 [0-BaseBlockDatabaseWorker] BaseManagedBlockBuilder - -1 committing block - start -------------------
+DEBUG 2020-10-15 22:48:30.942 [0-BaseBlockDatabaseWorker] ManualBlockchainConfigurationProvider - lastHeight: 10, currentConfigHeight: 0, nextConfigHeight: 0
+DEBUG 2020-10-15 22:48:30.942 [0-BaseBlockDatabaseWorker] BaseManagedBlockBuilder - -1 committing block - end -------------------
+DEBUG 2020-10-15 22:48:30.943 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Finish job commitBlock
+DEBUG 2020-10-15 22:48:31.046 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:48:31.046 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:11 ro:0 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:48:41.058 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:48:41.059 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:11 ro:1 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:48:51.078 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:48:51.078 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:11 ro:2 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:49:00.928 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Starting job buildBlock
+DEBUG 2020-10-15 22:49:00.942 [0-BaseBlockDatabaseWorker] BaseBlockchainEngine - [03:57]/[8F:88]: Checking transaction queue
+INFO  2020-10-15 22:49:00.945 [0-BaseBlockDatabaseWorker] BaseBlockchainEngine - [03:57]/[8F:88]: Block is finalized: 16 ms, 0 net tps, 0 gross tps, height: 11, accepted txs: 0, rejected txs: 0, root-hash: 46AF9064F12528CAD6A7C377204ACD0AC38CDC6912903E7DAB3703764C8DD5E5, block-rid: C6D26E285C1F132A1F96CE8E21893A8EED156771216355B184E9A75BDC5C0B5E, prev-block-rid: A6A51600F6E037BAEA63FE2E2BBDF869DA7AD1689C878B1CB7516974EC492C70
+DEBUG 2020-10-15 22:49:00.946 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Finish job buildBlock
+DEBUG 2020-10-15 22:49:00.960 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Starting job commitBlock
+DEBUG 2020-10-15 22:49:00.961 [0-BaseBlockDatabaseWorker] BaseManagedBlockBuilder - -1 committing block - start -------------------
+DEBUG 2020-10-15 22:49:00.979 [0-BaseBlockDatabaseWorker] ManualBlockchainConfigurationProvider - lastHeight: 11, currentConfigHeight: 0, nextConfigHeight: 0
+DEBUG 2020-10-15 22:49:00.980 [0-BaseBlockDatabaseWorker] BaseManagedBlockBuilder - -1 committing block - end -------------------
+DEBUG 2020-10-15 22:49:00.980 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Finish job commitBlock
+DEBUG 2020-10-15 22:49:01.086 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:49:01.086 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:12 ro:0 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:49:11.118 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:49:11.118 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:12 ro:1 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:49:21.148 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:49:21.149 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:12 ro:2 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:49:30.968 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Starting job buildBlock
+DEBUG 2020-10-15 22:49:30.982 [0-BaseBlockDatabaseWorker] BaseBlockchainEngine - [03:57]/[8F:88]: Checking transaction queue
+INFO  2020-10-15 22:49:30.986 [0-BaseBlockDatabaseWorker] BaseBlockchainEngine - [03:57]/[8F:88]: Block is finalized: 17 ms, 0 net tps, 0 gross tps, height: 12, accepted txs: 0, rejected txs: 0, root-hash: 46AF9064F12528CAD6A7C377204ACD0AC38CDC6912903E7DAB3703764C8DD5E5, block-rid: 5DE0444E0FF9EBFE51B5225F9A1E2A41D67AAF885E096B535F90E21382725C25, prev-block-rid: C6D26E285C1F132A1F96CE8E21893A8EED156771216355B184E9A75BDC5C0B5E
+DEBUG 2020-10-15 22:49:30.988 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Finish job buildBlock
+DEBUG 2020-10-15 22:49:30.999 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Starting job commitBlock
+DEBUG 2020-10-15 22:49:31.000 [0-BaseBlockDatabaseWorker] BaseManagedBlockBuilder - -1 committing block - start -------------------
+DEBUG 2020-10-15 22:49:31.018 [0-BaseBlockDatabaseWorker] ManualBlockchainConfigurationProvider - lastHeight: 12, currentConfigHeight: 0, nextConfigHeight: 0
+DEBUG 2020-10-15 22:49:31.018 [0-BaseBlockDatabaseWorker] BaseManagedBlockBuilder - -1 committing block - end -------------------
+DEBUG 2020-10-15 22:49:31.019 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Finish job commitBlock
+DEBUG 2020-10-15 22:49:31.154 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:49:31.154 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:13 ro:0 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:49:41.157 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:49:41.157 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:13 ro:1 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:49:51.182 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:49:51.182 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:13 ro:2 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:50:01.008 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Starting job buildBlock
+DEBUG 2020-10-15 22:50:01.022 [0-BaseBlockDatabaseWorker] BaseBlockchainEngine - [03:57]/[8F:88]: Checking transaction queue
+INFO  2020-10-15 22:50:01.026 [0-BaseBlockDatabaseWorker] BaseBlockchainEngine - [03:57]/[8F:88]: Block is finalized: 17 ms, 0 net tps, 0 gross tps, height: 13, accepted txs: 0, rejected txs: 0, root-hash: 46AF9064F12528CAD6A7C377204ACD0AC38CDC6912903E7DAB3703764C8DD5E5, block-rid: 335931194FBE143C8918F4A2BE615F39281A6770949486A3DB30320AA6B655BF, prev-block-rid: 5DE0444E0FF9EBFE51B5225F9A1E2A41D67AAF885E096B535F90E21382725C25
+DEBUG 2020-10-15 22:50:01.028 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Finish job buildBlock
+DEBUG 2020-10-15 22:50:01.038 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Starting job commitBlock
+DEBUG 2020-10-15 22:50:01.038 [0-BaseBlockDatabaseWorker] BaseManagedBlockBuilder - -1 committing block - start -------------------
+DEBUG 2020-10-15 22:50:01.055 [0-BaseBlockDatabaseWorker] ManualBlockchainConfigurationProvider - lastHeight: 13, currentConfigHeight: 0, nextConfigHeight: 0
+DEBUG 2020-10-15 22:50:01.055 [0-BaseBlockDatabaseWorker] BaseManagedBlockBuilder - -1 committing block - end -------------------
+DEBUG 2020-10-15 22:50:01.056 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Finish job commitBlock
+DEBUG 2020-10-15 22:50:01.196 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:50:01.197 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:14 ro:0 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:50:11.220 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:50:11.220 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:14 ro:1 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:50:21.247 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:50:21.247 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:14 ro:2 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:50:31.040 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Starting job buildBlock
+DEBUG 2020-10-15 22:50:31.056 [0-BaseBlockDatabaseWorker] BaseBlockchainEngine - [03:57]/[8F:88]: Checking transaction queue
+INFO  2020-10-15 22:50:31.060 [0-BaseBlockDatabaseWorker] BaseBlockchainEngine - [03:57]/[8F:88]: Block is finalized: 20 ms, 0 net tps, 0 gross tps, height: 14, accepted txs: 0, rejected txs: 0, root-hash: 46AF9064F12528CAD6A7C377204ACD0AC38CDC6912903E7DAB3703764C8DD5E5, block-rid: 03A67A1BE9E718B059255DDA05E39E5D596843F06DF7EE3118A8169B960AEB90, prev-block-rid: 335931194FBE143C8918F4A2BE615F39281A6770949486A3DB30320AA6B655BF
+DEBUG 2020-10-15 22:50:31.062 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Finish job buildBlock
+DEBUG 2020-10-15 22:50:31.072 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Starting job commitBlock
+DEBUG 2020-10-15 22:50:31.072 [0-BaseBlockDatabaseWorker] BaseManagedBlockBuilder - -1 committing block - start -------------------
+DEBUG 2020-10-15 22:50:31.122 [0-BaseBlockDatabaseWorker] ManualBlockchainConfigurationProvider - lastHeight: 14, currentConfigHeight: 0, nextConfigHeight: 0
+DEBUG 2020-10-15 22:50:31.123 [0-BaseBlockDatabaseWorker] BaseManagedBlockBuilder - -1 committing block - end -------------------
+DEBUG 2020-10-15 22:50:31.123 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Finish job commitBlock
+DEBUG 2020-10-15 22:50:31.261 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:50:31.262 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:15 ro:0 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:50:41.282 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:50:41.283 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:15 ro:1 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:50:51.307 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:50:51.307 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:15 ro:2 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:51:01.063 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Starting job buildBlock
+DEBUG 2020-10-15 22:51:01.078 [0-BaseBlockDatabaseWorker] BaseBlockchainEngine - [03:57]/[8F:88]: Checking transaction queue
+INFO  2020-10-15 22:51:01.081 [0-BaseBlockDatabaseWorker] BaseBlockchainEngine - [03:57]/[8F:88]: Block is finalized: 17 ms, 0 net tps, 0 gross tps, height: 15, accepted txs: 0, rejected txs: 0, root-hash: 46AF9064F12528CAD6A7C377204ACD0AC38CDC6912903E7DAB3703764C8DD5E5, block-rid: E64D33DAA87CEAEBC84AE11EE8C8A0EBE8CEAAC2817D7F7191618D602C763B2D, prev-block-rid: 03A67A1BE9E718B059255DDA05E39E5D596843F06DF7EE3118A8169B960AEB90
+DEBUG 2020-10-15 22:51:01.082 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Finish job buildBlock
+DEBUG 2020-10-15 22:51:01.095 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Starting job commitBlock
+DEBUG 2020-10-15 22:51:01.095 [0-BaseBlockDatabaseWorker] BaseManagedBlockBuilder - -1 committing block - start -------------------
+DEBUG 2020-10-15 22:51:01.112 [0-BaseBlockDatabaseWorker] ManualBlockchainConfigurationProvider - lastHeight: 15, currentConfigHeight: 0, nextConfigHeight: 0
+DEBUG 2020-10-15 22:51:01.112 [0-BaseBlockDatabaseWorker] BaseManagedBlockBuilder - -1 committing block - end -------------------
+DEBUG 2020-10-15 22:51:01.113 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Finish job commitBlock
+DEBUG 2020-10-15 22:51:01.310 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:51:01.311 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:16 ro:0 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:51:11.315 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:51:11.315 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:16 ro:1 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:51:21.337 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:51:21.338 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:16 ro:2 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:51:31.084 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Starting job buildBlock
+DEBUG 2020-10-15 22:51:31.099 [0-BaseBlockDatabaseWorker] BaseBlockchainEngine - [03:57]/[8F:88]: Checking transaction queue
+INFO  2020-10-15 22:51:31.101 [0-BaseBlockDatabaseWorker] BaseBlockchainEngine - [03:57]/[8F:88]: Block is finalized: 16 ms, 0 net tps, 0 gross tps, height: 16, accepted txs: 0, rejected txs: 0, root-hash: 46AF9064F12528CAD6A7C377204ACD0AC38CDC6912903E7DAB3703764C8DD5E5, block-rid: EEF7BF186AA2FC1A91259F6D59BB720F664CF53783DCEA70AD2CBBB06577B2C5, prev-block-rid: E64D33DAA87CEAEBC84AE11EE8C8A0EBE8CEAAC2817D7F7191618D602C763B2D
+DEBUG 2020-10-15 22:51:31.102 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Finish job buildBlock
+DEBUG 2020-10-15 22:51:31.114 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Starting job commitBlock
+DEBUG 2020-10-15 22:51:31.115 [0-BaseBlockDatabaseWorker] BaseManagedBlockBuilder - -1 committing block - start -------------------
+DEBUG 2020-10-15 22:51:31.129 [0-BaseBlockDatabaseWorker] ManualBlockchainConfigurationProvider - lastHeight: 16, currentConfigHeight: 0, nextConfigHeight: 0
+DEBUG 2020-10-15 22:51:31.129 [0-BaseBlockDatabaseWorker] BaseManagedBlockBuilder - -1 committing block - end -------------------
+DEBUG 2020-10-15 22:51:31.129 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Finish job commitBlock
+DEBUG 2020-10-15 22:51:31.362 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:51:31.362 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:17 ro:0 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:51:41.385 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:51:41.385 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:17 ro:1 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:51:51.405 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:51:51.405 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:17 ro:2 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:52:01.119 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Starting job buildBlock
+DEBUG 2020-10-15 22:52:01.133 [0-BaseBlockDatabaseWorker] BaseBlockchainEngine - [03:57]/[8F:88]: Checking transaction queue
+INFO  2020-10-15 22:52:01.139 [0-BaseBlockDatabaseWorker] BaseBlockchainEngine - [03:57]/[8F:88]: Block is finalized: 19 ms, 0 net tps, 0 gross tps, height: 17, accepted txs: 0, rejected txs: 0, root-hash: 46AF9064F12528CAD6A7C377204ACD0AC38CDC6912903E7DAB3703764C8DD5E5, block-rid: DCC257AD7E1B65C1B5711F39B310DF29390B15D8F8EAD305BF1816A615BF110D, prev-block-rid: EEF7BF186AA2FC1A91259F6D59BB720F664CF53783DCEA70AD2CBBB06577B2C5
+DEBUG 2020-10-15 22:52:01.140 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Finish job buildBlock
+DEBUG 2020-10-15 22:52:01.151 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Starting job commitBlock
+DEBUG 2020-10-15 22:52:01.152 [0-BaseBlockDatabaseWorker] BaseManagedBlockBuilder - -1 committing block - start -------------------
+DEBUG 2020-10-15 22:52:01.168 [0-BaseBlockDatabaseWorker] ManualBlockchainConfigurationProvider - lastHeight: 17, currentConfigHeight: 0, nextConfigHeight: 0
+DEBUG 2020-10-15 22:52:01.168 [0-BaseBlockDatabaseWorker] BaseManagedBlockBuilder - -1 committing block - end -------------------
+DEBUG 2020-10-15 22:52:01.169 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Finish job commitBlock
+DEBUG 2020-10-15 22:52:01.437 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:52:01.437 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:18 ro:0 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:52:11.447 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:52:11.448 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:18 ro:1 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:52:21.477 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:52:21.477 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:18 ro:2 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:52:31.158 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Starting job buildBlock
+DEBUG 2020-10-15 22:52:31.174 [0-BaseBlockDatabaseWorker] BaseBlockchainEngine - [03:57]/[8F:88]: Checking transaction queue
+INFO  2020-10-15 22:52:31.178 [0-BaseBlockDatabaseWorker] BaseBlockchainEngine - [03:57]/[8F:88]: Block is finalized: 19 ms, 0 net tps, 0 gross tps, height: 18, accepted txs: 0, rejected txs: 0, root-hash: 46AF9064F12528CAD6A7C377204ACD0AC38CDC6912903E7DAB3703764C8DD5E5, block-rid: D8CA6A841BE41A26F0B11C15B0A3F89FA8A0EAE23C4E74F4DB6DEED6C8DE231F, prev-block-rid: DCC257AD7E1B65C1B5711F39B310DF29390B15D8F8EAD305BF1816A615BF110D
+DEBUG 2020-10-15 22:52:31.179 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Finish job buildBlock
+DEBUG 2020-10-15 22:52:31.189 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Starting job commitBlock
+DEBUG 2020-10-15 22:52:31.190 [0-BaseBlockDatabaseWorker] BaseManagedBlockBuilder - -1 committing block - start -------------------
+DEBUG 2020-10-15 22:52:31.210 [0-BaseBlockDatabaseWorker] ManualBlockchainConfigurationProvider - lastHeight: 18, currentConfigHeight: 0, nextConfigHeight: 0
+DEBUG 2020-10-15 22:52:31.210 [0-BaseBlockDatabaseWorker] BaseManagedBlockBuilder - -1 committing block - end -------------------
+DEBUG 2020-10-15 22:52:31.211 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Finish job commitBlock
+DEBUG 2020-10-15 22:52:31.501 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:52:31.501 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:19 ro:0 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:52:41.520 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:52:41.520 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:19 ro:1 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:52:51.548 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:52:51.548 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:19 ro:2 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:53:01.193 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Starting job buildBlock
+DEBUG 2020-10-15 22:53:01.206 [0-BaseBlockDatabaseWorker] BaseBlockchainEngine - [03:57]/[8F:88]: Checking transaction queue
+INFO  2020-10-15 22:53:01.208 [0-BaseBlockDatabaseWorker] BaseBlockchainEngine - [03:57]/[8F:88]: Block is finalized: 14 ms, 0 net tps, 0 gross tps, height: 19, accepted txs: 0, rejected txs: 0, root-hash: 46AF9064F12528CAD6A7C377204ACD0AC38CDC6912903E7DAB3703764C8DD5E5, block-rid: 1FBAD6513BF942A725317157176C91ECC9D694997881D0C88016ECFB1E8B5410, prev-block-rid: D8CA6A841BE41A26F0B11C15B0A3F89FA8A0EAE23C4E74F4DB6DEED6C8DE231F
+DEBUG 2020-10-15 22:53:01.209 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Finish job buildBlock
+DEBUG 2020-10-15 22:53:01.225 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Starting job commitBlock
+DEBUG 2020-10-15 22:53:01.225 [0-BaseBlockDatabaseWorker] BaseManagedBlockBuilder - -1 committing block - start -------------------
+DEBUG 2020-10-15 22:53:01.242 [0-BaseBlockDatabaseWorker] ManualBlockchainConfigurationProvider - lastHeight: 19, currentConfigHeight: 0, nextConfigHeight: 0
+DEBUG 2020-10-15 22:53:01.243 [0-BaseBlockDatabaseWorker] BaseManagedBlockBuilder - -1 committing block - end -------------------
+DEBUG 2020-10-15 22:53:01.243 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Finish job commitBlock
+DEBUG 2020-10-15 22:53:01.571 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:53:01.572 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:20 ro:0 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:53:11.590 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:53:11.593 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:20 ro:1 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:53:21.606 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:53:21.606 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:20 ro:2 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:53:31.212 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Starting job buildBlock
+DEBUG 2020-10-15 22:53:31.239 [0-BaseBlockDatabaseWorker] BaseBlockchainEngine - [03:57]/[8F:88]: Checking transaction queue
+INFO  2020-10-15 22:53:31.243 [0-BaseBlockDatabaseWorker] BaseBlockchainEngine - [03:57]/[8F:88]: Block is finalized: 29 ms, 0 net tps, 0 gross tps, height: 20, accepted txs: 0, rejected txs: 0, root-hash: 46AF9064F12528CAD6A7C377204ACD0AC38CDC6912903E7DAB3703764C8DD5E5, block-rid: 8016C7F4E16D6B4E1FEC3291B87742D40B9F507BC3FA2D625B953A4FE4EBB108, prev-block-rid: 1FBAD6513BF942A725317157176C91ECC9D694997881D0C88016ECFB1E8B5410
+DEBUG 2020-10-15 22:53:31.244 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Finish job buildBlock
+DEBUG 2020-10-15 22:53:31.277 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Starting job commitBlock
+DEBUG 2020-10-15 22:53:31.278 [0-BaseBlockDatabaseWorker] BaseManagedBlockBuilder - -1 committing block - start -------------------
+DEBUG 2020-10-15 22:53:31.303 [0-BaseBlockDatabaseWorker] ManualBlockchainConfigurationProvider - lastHeight: 20, currentConfigHeight: 0, nextConfigHeight: 0
+DEBUG 2020-10-15 22:53:31.304 [0-BaseBlockDatabaseWorker] BaseManagedBlockBuilder - -1 committing block - end -------------------
+DEBUG 2020-10-15 22:53:31.304 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Finish job commitBlock
+DEBUG 2020-10-15 22:53:31.619 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:53:31.619 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:21 ro:0 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:53:41.635 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:53:41.635 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:21 ro:1 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:53:51.656 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:53:51.656 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:21 ro:2 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:54:01.253 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Starting job buildBlock
+DEBUG 2020-10-15 22:54:01.265 [0-BaseBlockDatabaseWorker] BaseBlockchainEngine - [03:57]/[8F:88]: Checking transaction queue
+INFO  2020-10-15 22:54:01.267 [0-BaseBlockDatabaseWorker] BaseBlockchainEngine - [03:57]/[8F:88]: Block is finalized: 14 ms, 0 net tps, 0 gross tps, height: 21, accepted txs: 0, rejected txs: 0, root-hash: 46AF9064F12528CAD6A7C377204ACD0AC38CDC6912903E7DAB3703764C8DD5E5, block-rid: B01130C6F42774465D64BCE039EF587A7A57DCB128076E171C5869FF71B0DF45, prev-block-rid: 8016C7F4E16D6B4E1FEC3291B87742D40B9F507BC3FA2D625B953A4FE4EBB108
+DEBUG 2020-10-15 22:54:01.268 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Finish job buildBlock
+DEBUG 2020-10-15 22:54:01.284 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Starting job commitBlock
+DEBUG 2020-10-15 22:54:01.285 [0-BaseBlockDatabaseWorker] BaseManagedBlockBuilder - -1 committing block - start -------------------
+DEBUG 2020-10-15 22:54:01.301 [0-BaseBlockDatabaseWorker] ManualBlockchainConfigurationProvider - lastHeight: 21, currentConfigHeight: 0, nextConfigHeight: 0
+DEBUG 2020-10-15 22:54:01.301 [0-BaseBlockDatabaseWorker] BaseManagedBlockBuilder - -1 committing block - end -------------------
+DEBUG 2020-10-15 22:54:01.301 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Finish job commitBlock
+DEBUG 2020-10-15 22:54:01.657 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:54:01.657 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:22 ro:0 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:54:11.670 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:54:11.670 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:22 ro:1 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:54:21.677 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:54:21.678 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:22 ro:2 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:54:31.287 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Starting job buildBlock
+DEBUG 2020-10-15 22:54:31.300 [0-BaseBlockDatabaseWorker] BaseBlockchainEngine - [03:57]/[8F:88]: Checking transaction queue
+INFO  2020-10-15 22:54:31.302 [0-BaseBlockDatabaseWorker] BaseBlockchainEngine - [03:57]/[8F:88]: Block is finalized: 14 ms, 0 net tps, 0 gross tps, height: 22, accepted txs: 0, rejected txs: 0, root-hash: 46AF9064F12528CAD6A7C377204ACD0AC38CDC6912903E7DAB3703764C8DD5E5, block-rid: A4D11F7DF605D675E5B7403F64F1BD2711E4B25B9C3BEA3DAB0ACBA44DEAC82D, prev-block-rid: B01130C6F42774465D64BCE039EF587A7A57DCB128076E171C5869FF71B0DF45
+DEBUG 2020-10-15 22:54:31.303 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Finish job buildBlock
+DEBUG 2020-10-15 22:54:31.318 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Starting job commitBlock
+DEBUG 2020-10-15 22:54:31.319 [0-BaseBlockDatabaseWorker] BaseManagedBlockBuilder - -1 committing block - start -------------------
+DEBUG 2020-10-15 22:54:31.335 [0-BaseBlockDatabaseWorker] ManualBlockchainConfigurationProvider - lastHeight: 22, currentConfigHeight: 0, nextConfigHeight: 0
+DEBUG 2020-10-15 22:54:31.335 [0-BaseBlockDatabaseWorker] BaseManagedBlockBuilder - -1 committing block - end -------------------
+DEBUG 2020-10-15 22:54:31.336 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Finish job commitBlock
+DEBUG 2020-10-15 22:54:31.691 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:54:31.691 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:23 ro:0 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:54:41.702 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:54:41.702 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:23 ro:1 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:54:51.713 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:54:51.714 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:23 ro:2 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:55:01.319 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Starting job buildBlock
+DEBUG 2020-10-15 22:55:01.334 [0-BaseBlockDatabaseWorker] BaseBlockchainEngine - [03:57]/[8F:88]: Checking transaction queue
+INFO  2020-10-15 22:55:01.338 [0-BaseBlockDatabaseWorker] BaseBlockchainEngine - [03:57]/[8F:88]: Block is finalized: 18 ms, 0 net tps, 0 gross tps, height: 23, accepted txs: 0, rejected txs: 0, root-hash: 46AF9064F12528CAD6A7C377204ACD0AC38CDC6912903E7DAB3703764C8DD5E5, block-rid: 973D1EF4A8C91A59B2479E50C77E36DB9FE98BD893FF7B6F75EAF624163CE69A, prev-block-rid: A4D11F7DF605D675E5B7403F64F1BD2711E4B25B9C3BEA3DAB0ACBA44DEAC82D
+DEBUG 2020-10-15 22:55:01.339 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Finish job buildBlock
+DEBUG 2020-10-15 22:55:01.350 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Starting job commitBlock
+DEBUG 2020-10-15 22:55:01.351 [0-BaseBlockDatabaseWorker] BaseManagedBlockBuilder - -1 committing block - start -------------------
+DEBUG 2020-10-15 22:55:01.366 [0-BaseBlockDatabaseWorker] ManualBlockchainConfigurationProvider - lastHeight: 23, currentConfigHeight: 0, nextConfigHeight: 0
+DEBUG 2020-10-15 22:55:01.367 [0-BaseBlockDatabaseWorker] BaseManagedBlockBuilder - -1 committing block - end -------------------
+DEBUG 2020-10-15 22:55:01.367 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Finish job commitBlock
+DEBUG 2020-10-15 22:55:01.726 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:55:01.726 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:24 ro:0 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:55:11.739 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:55:11.739 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:24 ro:1 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:55:21.752 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:55:21.752 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:24 ro:2 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:55:31.337 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Starting job buildBlock
+DEBUG 2020-10-15 22:55:31.349 [0-BaseBlockDatabaseWorker] BaseBlockchainEngine - [03:57]/[8F:88]: Checking transaction queue
+INFO  2020-10-15 22:55:31.356 [0-BaseBlockDatabaseWorker] BaseBlockchainEngine - [03:57]/[8F:88]: Block is finalized: 18 ms, 0 net tps, 0 gross tps, height: 24, accepted txs: 0, rejected txs: 0, root-hash: 46AF9064F12528CAD6A7C377204ACD0AC38CDC6912903E7DAB3703764C8DD5E5, block-rid: 8CC04572F902F48BC6B6C9DB37E21A00D92C6742A6D0927C5E1F1D677068CFE3, prev-block-rid: 973D1EF4A8C91A59B2479E50C77E36DB9FE98BD893FF7B6F75EAF624163CE69A
+DEBUG 2020-10-15 22:55:31.357 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Finish job buildBlock
+DEBUG 2020-10-15 22:55:31.370 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Starting job commitBlock
+DEBUG 2020-10-15 22:55:31.370 [0-BaseBlockDatabaseWorker] BaseManagedBlockBuilder - -1 committing block - start -------------------
+DEBUG 2020-10-15 22:55:31.384 [0-BaseBlockDatabaseWorker] ManualBlockchainConfigurationProvider - lastHeight: 24, currentConfigHeight: 0, nextConfigHeight: 0
+DEBUG 2020-10-15 22:55:31.384 [0-BaseBlockDatabaseWorker] BaseManagedBlockBuilder - -1 committing block - end -------------------
+DEBUG 2020-10-15 22:55:31.384 [0-BaseBlockDatabaseWorker] BaseBlockDatabase - Finish job commitBlock
+DEBUG 2020-10-15 22:55:31.775 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:55:31.775 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:25 ro:0 st:WaitBlock blockRID:null havesig:false
+DEBUG 2020-10-15 22:55:41.782 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: My node: 0, I'm primary,  block mngr: DNI, status mngr: BBI
+DEBUG 2020-10-15 22:55:41.782 [updateLoop-[03:57]/[8F:88]] ValidatorSyncManager - [03:57]/[8F:88]: node:0 he:25 ro:1 st:WaitBlock blockRID:null havesig:false
+INFO  2020-10-15 22:56:03.442 [main] SQLDatabaseAccess - Meta table does not exist! Assume database does not exist and create it (version: 1).

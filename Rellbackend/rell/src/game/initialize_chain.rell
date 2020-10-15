@@ -1,0 +1,48 @@
+
+// This operation is called once on a fresh chain to initialize stuffs
+operation initialize_chain(){
+  require(is_signer(chain_context.args.admin_pubkey));
+  create_admin_account_if_needed();
+  register_token_asset_if_needed();
+
+  // Originals
+  initialize_originals();
+  init_structures();
+}
+
+/*
+ * ADMIN ACCOUNT
+ * The admin account would be the one to have all plots initially, and people would buy plots from the admin account by paying WONDER_TOKEN (below)
+ */
+
+function admin_auth_descriptor(): ft3.acc.auth_descriptor {
+  return ft3.acc.auth_descriptor(
+    "S",
+    [chain_context.args.admin_pubkey],
+    [["A", "T"].to_gtv(), chain_context.args.admin_pubkey.to_hex().to_gtv()], // chain_context arguments is defined in config/run.xml
+    gtv.from_bytes(x'a0020500')
+  );
+}
+
+function create_admin_account_if_needed() {
+  val auth_descriptor = admin_auth_descriptor();
+  val account = ft3.acc.account @? { .id == auth_descriptor.hash() };
+
+  if (account == null) {
+    ft3.acc.create_account_with_auth(auth_descriptor);
+  }
+}
+
+
+/*
+ * FT3 ASSETS
+ */
+
+// This would be the "money" token to buy stuffs
+function register_token_asset_if_needed() {
+  val token = ft3.core.asset @? { .id == (chain_context.args.token_name, chain_context.blockchain_rid).hash() };
+
+  if (token == null) {
+    ft3.core.register_asset(chain_context.args.token_name, chain_context.blockchain_rid);
+  }
+}

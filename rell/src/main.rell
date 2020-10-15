@@ -1,9 +1,0 @@
-module;
-
-import lib.ft3.operations.dev_op_account;
-import lib.ft3.operations.dev_op_asset;
-import lib.ft3.operations.dev_op_balance;
-
-namespace game{
-  import ^.game;
-}

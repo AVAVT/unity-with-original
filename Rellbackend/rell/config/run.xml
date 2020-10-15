@@ -1,0 +1,44 @@
+<run wipe-db="true">
+  <nodes>
+    <config src="node-config.properties" add-signers="true" />
+  </nodes>
+  <chains>
+    <chain name="originals_demo" iid="0">
+      <config height="0">
+        <app module="main">
+          <args module="game">
+            <arg key="token_name">
+              <string>WONDER TOKEN</string>
+            </arg>
+            <arg key="admin_pubkey">
+              <bytea>03B519082C905096E4B658E7ACA7B971DF3A9D3A1D04BBEBE342B59CCCDC6DC3BA</bytea>
+            </arg>
+          </args>
+          <args module="rell_modules.ft3.core">
+            <arg key="my_blockchain_name">
+              <string>test</string>
+            </arg>
+            <arg key="my_blockchain_website">
+              <string>test_website</string>
+            </arg>
+            <arg key="my_blockchain_description">
+              <string>test_description</string>
+            </arg>
+            <arg key="rate_limit_active">
+              <int>0</int>
+            </arg>
+            <arg key="rate_limit_max_points">
+              <int>10</int>
+            </arg>            <!-- maximum amount of request credit that is possible to keep -->
+            <arg key="rate_limit_recovery_time">
+              <int>5000</int>
+            </arg>
+            <arg key="rate_limit_points_at_account_creation">
+              <int>1</int>
+            </arg>
+          </args>
+        </app>
+      </config>
+    </chain>
+  </chains>
+</run>
