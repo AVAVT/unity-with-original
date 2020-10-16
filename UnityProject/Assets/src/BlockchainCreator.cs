@@ -21,7 +21,7 @@ public class BlockchainCreator
       return _instance;
     }
   }
-  const string blockchainRID = "FE76BCCC0B059F2249450597BF81CF5A8E03BA229E33A1B418C2BAC82A422EE9";
+  const string blockchainRID = "ADF4DCAE9D8047D5771F64404DA0090FEB4E67B7F50B1B7B0AACF2CA9CE84BE7";
   const string blockchainUrl = "http://localhost:7740/";
   public const string adminPrivKey = "3B8A4A224DC5A1C56B8B8C39A6FD5461BA4C3579506B3E85A6163350FD5E00CA";
 
@@ -112,15 +112,16 @@ public class BlockchainCreator
     }
   }
 
-  public async Task<JObject> GetLandOwnedByUser()
+  public async Task<JObject> GetPlotsOwnedByUser()
   {
     if (!IsInitialized || session == null) throw new Exception("Blockchain is not initialized!");
 
     var queryResult = await blockchain.Query<JObject>(
-      "marketplace.find_original_instances_by_owner_id",
-      ("owner_id", session.User.AuthDescriptor.ID),
-      ("after_rowid", 0),
-      ("page_size", 40)
+      "find_plot_instances_by_owner_id",
+      ("owner_id", session.User.AuthDescriptor.ID)
+    // The 2 params below are not needed but I just keep them here as example what to do if we need to provide multiple params to a query, wasted me a lot of time to figure this syntax out
+    // ("after_rowid", 0),
+    // ("page_size", 40)
     );
 
     if (queryResult.control.Error) throw new Exception(queryResult.control.ErrorMessage);

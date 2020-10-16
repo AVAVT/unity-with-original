@@ -19,24 +19,28 @@ public class SampleSceneManager : MonoBehaviour
     {
       var initializeResult = await BlockchainCreator.Instance.InitializeChain();
       if (initializeResult) Debug.Log("Chain Initialized");
+    }
+    catch (Exception e)
+    {
+      Debug.Log("Chain initialization failed. Maybe it's already initialized before?");
+      Debug.LogError(e);
+    }
 
+    try
+    {
       BlockchainCreator.Instance.CreateSession(BlockchainCreator.adminPrivKey);
 
-      var adminProperties = await BlockchainCreator.Instance.GetLandOwnedByUser();
+      var adminProperties = await BlockchainCreator.Instance.GetPlotsOwnedByUser();
       Debug.Log("Admin property fetched. JSON string looks like this:");
       Debug.Log(adminProperties.ToString());
+
+      var firstItem = adminProperties["instances"][0];
       Debug.Log("First item is:");
-      Debug.Log(adminProperties["instances"][0]["name"]);
+      Debug.Log(firstItem["name"]);
+      Debug.Log($"Position: {firstItem["x_left"]}-{firstItem["y_bottom"]}");
+      Debug.Log($"Width: {firstItem["width"]}");
+      Debug.Log($"Height: {firstItem["height"]}");
 
-      var queryResult = await BlockchainCreator.Instance.blockchain.Query<JObject>(
-      "marketplace.find_instance_by_id",
-      ("structure", adminProperties["instances"][0]["_structure"]["name"].ToString()),
-      ("id", Util.HexStringToBuffer(adminProperties["instances"][0]["id"].ToString()))
-    );
-
-      if (queryResult.control.Error) throw new Exception(queryResult.control.ErrorMessage);
-
-      Debug.Log(queryResult.content.ToString());
     }
     catch (Exception e)
     {

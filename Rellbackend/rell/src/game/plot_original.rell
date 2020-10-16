@@ -1,0 +1,90 @@
+import ^.lib.interface.*;
+import ^.lib.structure.*;
+import ^.lib.instance.*;
+
+function init_plot_interface() {
+
+  // IOriginal and ITradeable are defined in initialize_originals(), you can search for it in the project to see what is included in those interfaces
+	val ITradeableOriginal = Interface("ITradeableOriginal");
+  
+	val IPlot = defI(interface_("IPlot", extends([ITradeableOriginal]), 
+		[
+			"x_left": prop(
+				static(),
+        readonly(),
+				propI(int())
+			),
+      "y_bottom": prop(
+				static(),
+        readonly(),
+				propI(int())
+			),
+      "width": prop(
+				static(),
+        readonly(),
+				propI(int())
+			),
+      "height": prop(
+				static(),
+        readonly(),
+				propI(int())
+			)
+		],
+    meta([
+			category("LandPlots"),
+			marketplace_name("Land Plots"),
+			marketplace_description("This is Land Plots description")
+		])
+	));
+}
+
+query find_plot_instances_by_owner_id(owner_id: byte_array) {
+	var instances = _find_plot_instances_by_owner_id(owner_id);
+
+  val ITradeableOriginal = Interface("ITradeableOriginal");
+  val IPlot = Interface("IPlot");
+	
+	val mapping_rules = [
+		map_(struct_details(), to_map("_structure")),
+		map_(interfaces([ITradeableOriginal.name]), direct()),
+		map_(interface_props([ITradeableOriginal.name]), to_list("children")),
+    map_(interfaces([IPlot.name]), direct()),
+		map_(achievements(), to_list("achievements"))
+	];
+
+  val result = list<map<text, gtv?>>();
+	
+	for (instance in instances) {
+		result.add(
+      map_instance(instance, 
+        mapping_rules,
+        [
+          interface_type(ITradeableOriginal, mapping_rules)
+        ]
+      )
+    );
+	}
+	
+	return (
+    count = instances.size(),
+		instances = result
+  );
+}
+
+function _find_plot_instances_by_owner_id(owner_id: byte_array): list<instance> {
+	return (
+		i: instance, 
+		ip: instance_property, 
+		ipva: instance_property_value_account, 
+		si: structure_interface,
+		a: ft3.acc.account
+	) @* {
+		si.interface == Interface("IPlot"),
+		i.structure == si.structure,
+		ip.structure_property.name == "owner",
+		ip.instance == i,
+		ipva.instance_property == ip,
+		ipva.value == a,
+		a.id == owner_id
+	} ( @sort i );
+}

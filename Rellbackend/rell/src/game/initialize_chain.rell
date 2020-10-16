@@ -7,7 +7,7 @@ operation initialize_chain(){
 
   // Originals
   initialize_originals();
-  init_structures();
+  init_plot_interface();
 }
 
 /*
