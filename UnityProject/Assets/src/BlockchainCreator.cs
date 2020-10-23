@@ -1,3 +1,4 @@
+using Chromia.Postchain.Client;
 using Chromia.Postchain.Ft3;
 using Newtonsoft.Json.Linq;
 using System;
@@ -21,7 +22,7 @@ public class BlockchainCreator
       return _instance;
     }
   }
-  const string blockchainRID = "ADF4DCAE9D8047D5771F64404DA0090FEB4E67B7F50B1B7B0AACF2CA9CE84BE7";
+  public const string blockchainRID = "AA13D09CF9B4F10F1A2E5183051B85DB1FA1C81BC3CE95778A3BA2C1F35C102F";
   const string blockchainUrl = "http://localhost:7740/";
   public const string adminPrivKey = "3B8A4A224DC5A1C56B8B8C39A6FD5461BA4C3579506B3E85A6163350FD5E00CA";
 
@@ -29,6 +30,10 @@ public class BlockchainCreator
   public bool IsInitialized { get; private set; }
   public KeyPair keyPair { get; private set; }
   public BlockchainSession session { get; private set; }
+  public Account account { get; private set; }
+  public delegate void OnBlockchainInitializedDelegate();
+
+  public OnBlockchainInitializedDelegate OnBlockchainInitialized;
 
   BlockchainCreator()
   {
@@ -38,7 +43,7 @@ public class BlockchainCreator
 
   async void InitializeBlockchain()
   {
-    byte[] blockChainRIDBuffer = Util.HexStringToBuffer(blockchainRID);
+    byte[] blockChainRIDBuffer = PostchainUtil.HexStringToBuffer(blockchainRID);
     blockchain = await Blockchain.Initialize(
       blockChainRIDBuffer,
       new DirectoryServiceBase(
@@ -47,6 +52,7 @@ public class BlockchainCreator
     );
 
     IsInitialized = true;
+    OnBlockchainInitialized?.Invoke();
   }
 
   public async Task<bool> InitializeChain()
@@ -94,7 +100,7 @@ public class BlockchainCreator
       result = await blockchain.Call(new Operation("marketplace.new_instance", new dynamic[] {
         "Honeydew Valley",
         new dynamic[]{
-          new dynamic[]{"id", Util.HexStringToBuffer(System.Guid.NewGuid().ToString().Replace("-", ""))},
+          new dynamic[]{"id", PostchainUtil.HexStringToBuffer(System.Guid.NewGuid().ToString().Replace("-", ""))},
           new dynamic[]{"asset_id", tokenQueryResult.content[0].GetId()},
           new dynamic[]{"price", 40},
           new dynamic[]{"is_listed", 1}
@@ -129,17 +135,23 @@ public class BlockchainCreator
     return queryResult.content;
   }
 
-  public bool CreateSession(string privKey)
+  public bool CreateSession(string privKey, FlagsType[] flags)
   {
     if (!IsInitialized) return false;
 
     keyPair = new KeyPair(privKey);
 
-    var authDescriptor = new SingleSignatureAuthDescriptor(keyPair.PubKey, new FlagsType[] { FlagsType.Account, FlagsType.Transfer });
+    var authDescriptor = new SingleSignatureAuthDescriptor(keyPair.PubKey, flags);
     var user = new User(keyPair, authDescriptor);
 
     session = new BlockchainSession(user, blockchain);
 
     return true;
+  }
+
+  public async void SetAccountById(string accountId)
+  {
+    if (session == null) throw new System.Exception("Missing blockchain session!");
+    account = await Account.GetById(PostchainUtil.HexStringToBuffer(accountId), session);
   }
 }

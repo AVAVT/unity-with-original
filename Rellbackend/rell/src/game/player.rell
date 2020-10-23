@@ -7,14 +7,12 @@
 entity player {
   key username: text; // So putting only username on a "key" line will ensure that each user must use a different username
   key account: ft3.acc.account; // since Original depends on ft3 we will use ft3 account system here
-  avatar: integer;
 }
 
 // Return data of queries for player
 struct player_info {
   id: byte_array;
   username: text;
-  avatar: integer;
   tokens: integer;
 }
 
@@ -24,17 +22,16 @@ struct player_info {
 
 operation create_player(
   username: text,
-  avatar: integer,
   account_id: byte_array,
   auth_descriptor_id: byte_array
 ){
-  val account = ft3.acc.auth_and_log(account_id, auth_descriptor_id, ["A"]);
+  val account = ft3.acc.auth_and_log(account_id, auth_descriptor_id, ["T"]);
 
   // create the token wallet for player, see init.rell
   ft3.core.ensure_balance( account,  ft3.core.asset @ { .name == chain_context.args.token_name } );
 
   // add player to table
-  create player( username, avatar, account );	
+  create player( username, account );	
 }
 
 /*
@@ -88,7 +85,6 @@ function get_player_info(player) : player_info {
   return player_info(
     id = player.account.id,
     username = player.username,
-    avatar = player.avatar,
     tokens = tokens
   );
 }
